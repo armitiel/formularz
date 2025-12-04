@@ -386,6 +386,221 @@ export default function HomePage() {
                   })}
                 </div>
               </div>
+
+              {/* D. Działania ekspozycyjne, eventowe i edukacyjne */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  D. Działania ekspozycyjne, eventowe i edukacyjne
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'targi_expo_showroomy_polska',
+                    'instalacje_wizualne_wydarzenia',
+                    'szkolenia_architekci_wykonawcy',
+                    'webinary_live_polska',
+                    'eventy_tematyczne_tworcy',
+                    'otwarci_ekspozycyjne'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Udział w polskich targach, expo i showroomach',
+                      'Instalacje wizualne na wydarzenia branżowe',
+                      'Szkolenia dla architektów, wykonawców i deweloperów',
+                      'Webinary / live\'y dla odbiorców w Polsce',
+                      'Eventy tematyczne z udziałem twórców',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* E. Rozszerzona współpraca biznesowa */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  E. Rozszerzona współpraca biznesowa
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'wspolpraca_niezalezny_partner',
+                    'stala_wspolpraca_konsultant',
+                    'kampanie_kwartalne_polroczne',
+                    'prezentacje_deweloperzy',
+                    'doradztwo_kreatywne_klienci',
+                    'otwarci_biznesowa'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Współpraca jako niezależny partner',
+                      'Stała współpraca jako konsultant kreatywny',
+                      'Kampanie kwartalne / półroczne',
+                      'Prezentacje produktów Diasen u deweloperów',
+                      'Doradztwo kreatywne dla klientów',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* F. Materiały edukacyjne i świadomościowe */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  F. Materiały edukacyjne i świadomościowe (dla szerokiej publiczności w Polsce)
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'kampanie_akustyka_mieszkan',
+                    'materialy_zdrowe_wnetrza',
+                    'tresci_storytelling_odbiorcy',
+                    'serie_edukacyjne_reelsy',
+                    'porownania_produktow_typowe',
+                    'kampanie_nowe_mieszkania',
+                    'akcja_ulotkowa_probka_farby',
+                    'ulotki_edukacyjne_korek',
+                    'dystrybucja_osiedla_sklepy',
+                    'ulotki_qr_kody',
+                    'ogolnokrajowa_kampania',
+                    'otwarci_edukacyjne'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Kampanie o akustyce mieszkań',
+                      'Materiały o zdrowych wnętrzach i mikroklimacie',
+                      'Treści storytellingowe dla zwykłych odbiorców',
+                      'Serie edukacyjne: reelsy, grafiki, krótkie filmy',
+                      'Porównania produktów Diasen z typowymi materiałami',
+                      'Kampanie dla nowych mieszkań i rodzin',
+                      'Ogólnokrajowa akcja ulotkowa z próbką farby',
+                      'Ulotki edukacyjne o korku (zdrowie, akustyka, mikroklimat)',
+                      'Dystrybucja na osiedlach, showroomach, w sklepach',
+                      'Ulotki z QR kodami (filmy, poradniki, galerie)',
+                      'Ogólnokrajowa kampania informacyjna',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* G. Social Media — Kreacja, Strategia i Prowadzenie */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  G. Social Media — Kreacja, Strategia i Prowadzenie (Diasen Polska)
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'prowadzenie_oficjalne_profile',
+                    'wspolprowadzenie_sm_marketing',
+                    'produkcja_tresci_premium',
+                    'budowa_spojnej_estetyki',
+                    'serie_edukacyjne_sm',
+                    'strategia_komunikacji_polska',
+                    'wsparcie_eventy_targi',
+                    'otwarci_social_media'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Prowadzenie oficjalnych profili Diasen Polska',
+                      'Współprowadzenie SM z działem marketingu',
+                      'Produkcja treści premium: foto, wideo, reels',
+                      'Budowa spójnej estetyki SM',
+                      'Serie edukacyjne pod social media',
+                      'Strategia komunikacji na polski rynek',
+                      'Wsparcie podczas eventów i targów',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* H. Utworzenie lub współtworzenie działu marketingowego */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  H. Utworzenie lub współtworzenie działu marketingowego Diasen Polska
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'stworzenie_dzial_od_podstaw',
+                    'wspoltworzenie_lider_kreatywny',
+                    'udzial_konsultant_wspolprowadzacy',
+                    'strategia_wizerunek_rynek_pl',
+                    'wsparcie_kampanie_marketingowe',
+                    'budowa_brand_book_polski',
+                    'rekrutacja_selekcja_wspolpracownicy',
+                    'otwarci_dzial_marketingu'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Stworzenie od podstaw działu marketingu Diasen Polska',
+                      'Współtworzenie działu jako lider kreatywny',
+                      'Udział jako konsultant lub współprowadzący',
+                      'Opracowanie pełnej strategii wizerunku na rynek PL',
+                      'Wsparcie przy kampaniach i działaniach marketingowych',
+                      'Budowa polskiego brand booka Diasen',
+                      'Rekrutacja lub selekcja współpracowników',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
             </section>
 
             {/* SEKCJA 2 – Model współpracy i zaangażowania */}
@@ -471,6 +686,56 @@ export default function HomePage() {
                         name="engagementScope"
                         value={option.value}
                         checked={formData.engagementScope.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Poziom integracji z zespołem */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-200">4. Poziom integracji z zespołem</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { value: 'praca_niezalezna', label: 'Praca niezależna' },
+                    { value: 'wspolpraca_dzial_marketingu', label: 'Praca we współpracy z działem marketingu' },
+                    { value: 'wspolne_dzialania_projekty', label: 'Wspólne działania przy projektach' },
+                    { value: 'otwarci_integracja', label: 'Jesteśmy otwarci' }
+                  ].map((option) => (
+                    <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
+                      <input
+                        type="checkbox"
+                        name="teamIntegrationLevel"
+                        value={option.value}
+                        checked={formData.teamIntegrationLevel.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* 5. Preferencje dodatkowe */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-200">5. Preferencje dodatkowe</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { value: 'raporty_dzialan', label: 'Raporty z działań' },
+                    { value: 'spojana_linia_kreatywna', label: 'Spójna linia kreatywna' },
+                    { value: 'budowanie_spolecznosci', label: 'Budowanie społeczności (architekci, wykonawcy)' },
+                    { value: 'otwarci_preferencje', label: 'Jesteśmy otwarci' }
+                  ].map((option) => (
+                    <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
+                      <input
+                        type="checkbox"
+                        name="additionalPreferences"
+                        value={option.value}
+                        checked={formData.additionalPreferences.includes(option.value)}
                         onChange={handleCheckboxChange}
                         className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
