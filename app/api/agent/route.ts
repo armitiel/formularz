@@ -1,32 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 interface FormData {
-  // Section 1: Company Data
+  // Basic company info
   companyName: string;
   contactPerson: string;
   contactRole: string;
   contactEmail: string;
   
-  // Section 2: Modules of collaboration
-  modules: string[];
+  // SEKCJA 1: Obszary współpracy (A-H)
+  areasOfCooperation: string[];
   
-  // Section 3: Goals
-  goals: string[];
-  goalsDetails: string;
+  // SEKCJA 2: Model współpracy i zaangażowania
+  cooperationModel: string[];
+  billingForm: string[];
+  engagementScope: string[];
+  teamIntegrationLevel: string[];
+  additionalPreferences: string[];
   
-  // Section 4: Intensity & Budget
-  intensity: number;
-  budgetMin: string;
-  budgetMax: string;
+  // SEKCJA 3: Scenariusze współpracy (1-8)
+  selectedScenarios: string[];
   
-  // Section 5: Markets
-  markets: string[];
-  marketsDetails: string;
-  
-  // Section 6: Language & Email
+  // Additional options
   languageMode: string;
   sendEmail: boolean;
   emailToSend: string;
+  additionalNotes: string;
 }
 
 async function generateCooperationProposal(data: FormData): Promise<string> {
@@ -68,42 +66,56 @@ async function generateCooperationProposal(data: FormData): Promise<string> {
   };
 
   // Build prompt for AI
-  const prompt = `
-You are an expert consultant generating a premium B2B collaboration proposal. Based on the following client data, generate a structured, professional collaboration proposal.
-
-CLIENT DATA:
-- Company: ${data.companyName}
-- Contact: ${data.contactPerson}${data.contactRole ? ` (${data.contactRole})` : ''}
-- Email: ${data.contactEmail}
-
-SELECTED MODULES:
-${data.modules.map(m => `• ${moduleLabels[m]?.[data.languageMode === 'en' ? 'en' : 'pl'] || m}`).join('\n')}
-
-SELECTED GOALS:
-${data.goals.map(g => `• ${goalLabels[g]?.[data.languageMode === 'en' ? 'en' : 'pl'] || g}`).join('\n')}
-
-ADDITIONAL GOALS DETAILS:
-${data.goalsDetails || 'Not specified'}
-
-COLLABORATION INTENSITY: ${data.intensity}% (${variant} variant)
-BUDGET RANGE: ${data.budgetMin || 'Not specified'} - ${data.budgetMax || 'Not specified'} EUR monthly
-
-TARGET MARKETS: ${data.markets.join(', ')}
-MARKETS DETAILS: ${data.marketsDetails || 'Not specified'}
-
-LANGUAGE: ${data.languageMode === 'en' ? 'English only' : data.languageMode === 'pl' ? 'Polish only' : 'Both Polish and English'}
-
-Generate a comprehensive, structured proposal that includes:
-1. Executive summary with recommended variant (${variant})
-2. Module descriptions grouped by category
-3. Expected outcomes based on selected goals
-4. Collaboration model and budget structure
-5. Next steps
-
-${data.languageMode === 'en' ? 'Write entirely in English.' : data.languageMode === 'pl' ? 'Write entirely in Polish.' : 'Write in Polish first, then add English translation separated by divider.'}
-
-Make it professional, detailed, and compelling for a B2B client.
-`;
+    const prompt = `
+  You are an expert assistant that builds and synthesizes B2B collaboration offers based on a structured questionnaire for Diasen Polska.
+  
+  CONTEXT:
+  The client is ${data.companyName} and they filled in a form with their collaboration preferences.
+  
+  CLIENT DATA:
+  - Company: ${data.companyName}
+  - Contact: ${data.contactPerson}${data.contactRole ? ` (${data.contactRole})` : ''}
+  - Email: ${data.contactEmail}
+  
+  SEKCJA 1 - SELECTED AREAS OF COOPERATION:
+  ${data.areasOfCooperation.length > 0
+    ? data.areasOfCooperation.map(area => `• ${area.replace(/_/g, ' ')}`).join('\n')
+    : '• No areas selected'}
+  
+  SEKCJA 2 - COOPERATION MODEL PREFERENCES:
+  Cooperation Model: ${data.cooperationModel.join(', ') || 'Not specified'}
+  Billing Form: ${data.billingForm.join(', ') || 'Not specified'}
+  Engagement Scope: ${data.engagementScope.join(', ') || 'Not specified'}
+  Team Integration: ${data.teamIntegrationLevel.join(', ') || 'Not specified'}
+  Additional Preferences: ${data.additionalPreferences.join(', ') || 'Not specified'}
+  
+  SEKCJA 3 - SELECTED COOPERATION SCENARIOS:
+  ${data.selectedScenarios.length > 0
+    ? data.selectedScenarios.map(scenario => `• ${scenario.replace(/_/g, ' ')}`).join('\n')
+    : '• No scenarios selected'}
+  
+  ADDITIONAL NOTES:
+  ${data.additionalNotes || 'No additional notes provided'}
+  
+  LANGUAGE: ${data.languageMode === 'en' ? 'English only' : data.languageMode === 'pl' ? 'Polish only' : 'Both Polish and English'}
+  
+  YOUR TASK:
+  Create a clear, structured, premium-looking collaboration proposal ("FINALNA HYBRYDA") based on the selections above.
+  
+  The output should include:
+  1. Wprowadzenie / kontekst współpracy
+  2. Wybrane obszary współpracy (podsumowanie wyborów klienta)
+  3. Proponowany model współpracy (odniesienie do SEKCJA 2 + scenariuszy)
+  4. Moduły / filary współpracy (opis hybrydy na bazie SEKCJA 1 i wybranych scenariuszy z SEKCJA 3)
+  5. Model rozliczeń i zaangażowania
+  6. Proponowany harmonogram / etapy
+  7. Wstępna wycena lub opis doprecyzowania wyceny
+  8. Podsumowanie i zaproszenie do rozmowy
+  
+  Use premium, calm, partnership tone with clear B2B language. If multiple areas are selected, combine them into a logical PROGRAM with modules.
+  
+  ${data.languageMode === 'en' ? 'Write entirely in English.' : data.languageMode === 'pl' ? 'Write entirely in Polish.' : 'Write in Polish first, then add English translation separated by divider.'}
+  `;
 
   try {
     // Try to use OpenRouter API if available
@@ -148,8 +160,10 @@ Make it professional, detailed, and compelling for a B2B client.
 }
 
 function generateFallbackProposal(data: FormData): string {
-  const variant = data.modules.length <= 2 || data.intensity <= 30 ? 'BASIC' :
-                 data.modules.length <= 5 || data.intensity <= 70 ? 'PLUS' : 'PRO';
+  // Determine complexity based on selected areas and scenarios
+  const totalSelections = data.areasOfCooperation.length + data.selectedScenarios.length;
+  const variant = totalSelections <= 3 ? 'BASIC' :
+                 totalSelections <= 6 ? 'PLUS' : 'PRO';
 
   const isEnglish = data.languageMode === 'en';
   const isBoth = data.languageMode === 'both';
@@ -175,66 +189,64 @@ ${lang === 'en'
 
 ${lang === 'en' ? 'RECOMMENDED VARIANT' : 'REKOMENDOWANY WARIANT'}: ${variant}
 
-${lang === 'en' ? 'Key assumptions' : 'Kluczowe założenia'}:
-• ${lang === 'en' ? 'Collaboration intensity' : 'Intensywność współpracy'}: ${data.intensity}%
-• ${lang === 'en' ? 'Selected modules' : 'Wybrane moduły'}: ${data.modules.length} ${lang === 'en' ? 'areas' : 'obszarów'}
-• ${lang === 'en' ? 'Target markets' : 'Rynki docelowe'}: ${data.markets.join(', ')}
-• ${lang === 'en' ? 'Monthly budget' : 'Budżet miesięczny'}: ${data.budgetMin ? `${data.budgetMin}-` : ''}${data.budgetMax ? `${data.budgetMax}` : (lang === 'en' ? 'to be agreed' : 'do uzgodnienia')} EUR
+${lang === 'en' ? 'RECOMMENDED VARIANT' : 'REKOMENDOWANY WARIANT'}: ${variant}
 
-📋 ${lang === 'en' ? 'SELECTED COLLABORATION MODULES' : 'WYBRANE MODUŁY WSPÓŁPRACY'}
+📋 ${lang === 'en' ? 'SELECTED AREAS OF COOPERATION' : 'WYBRANE OBSZARY WSPÓŁPRACY'}
 ───────────────────────────────────────────────────────────────────────────────
 
-${data.modules.length > 0
-  ? data.modules.map(module => `• ${module.replace(/_/g, ' ')}`).join('\n')
-  : (lang === 'en' ? '• No modules selected yet' : '• Brak wybranych modułów')
+${data.areasOfCooperation.length > 0
+  ? data.areasOfCooperation.map(area => `• ${area.replace(/_/g, ' ')}`).join('\n')
+  : (lang === 'en' ? '• No areas selected yet' : '• Nie wybrano jeszcze obszarów')
 }
 
-🎯 ${lang === 'en' ? 'STRATEGIC GOALS' : 'CELE STRATEGICZNE'}
+🎯 ${lang === 'en' ? 'SELECTED COOPERATION SCENARIOS' : 'WYBRANE SCENARIUSZE WSPÓŁPRACY'}
 ───────────────────────────────────────────────────────────────────────────────
 
-${lang === 'en' ? 'Main objectives' : 'Główne cele'}:
-${data.goals.length > 0
-  ? data.goals.map(goal => `• ${goal.replace(/_/g, ' ')}`).join('\n')
-  : (lang === 'en' ? '• To be defined during strategic workshop' : '• Do ustalenia podczas warsztatu strategicznego')
+${data.selectedScenarios.length > 0
+  ? data.selectedScenarios.map(scenario => `• ${scenario.replace(/_/g, ' ')}`).join('\n')
+  : (lang === 'en' ? '• No scenarios selected yet' : '• Nie wybrano jeszcze scenariuszy')
 }
 
-${data.goalsDetails ? `
-${lang === 'en' ? 'Priority details' : 'Szczegóły priorytetów'}:
-${data.goalsDetails}
+⚙️ ${lang === 'en' ? 'COOPERATION MODEL PREFERENCES' : 'PREFERENCJE MODELU WSPÓŁPRACY'}
+───────────────────────────────────────────────────────────────────────────────
+
+${lang === 'en' ? 'Cooperation Model' : 'Model współpracy'}: ${data.cooperationModel.join(', ') || (lang === 'en' ? 'Not specified' : 'Nie określono')}
+${lang === 'en' ? 'Billing Form' : 'Forma rozliczeń'}: ${data.billingForm.join(', ') || (lang === 'en' ? 'Not specified' : 'Nie określono')}
+${lang === 'en' ? 'Engagement Scope' : 'Zakres zaangażowania'}: ${data.engagementScope.join(', ') || (lang === 'en' ? 'Not specified' : 'Nie określono')}
+${lang === 'en' ? 'Team Integration' : 'Integracja z zespołem'}: ${data.teamIntegrationLevel.join(', ') || (lang === 'en' ? 'Not specified' : 'Nie określono')}
+${lang === 'en' ? 'Additional Preferences' : 'Dodatkowe preferencje'}: ${data.additionalPreferences.join(', ') || (lang === 'en' ? 'Not specified' : 'Nie określono')}
+
+${data.additionalNotes ? `
+💬 ${lang === 'en' ? 'ADDITIONAL NOTES' : 'DODATKOWE UWAGI'}
+───────────────────────────────────────────────────────────────────────────────
+${data.additionalNotes}
 ` : ''}
 
-💰 ${lang === 'en' ? 'COLLABORATION MODEL & BUDGET' : 'MODEL WSPÓŁPRACY I BUDŻET'}
+🔄 ${lang === 'en' ? 'FINAL HYBRID PROPOSAL' : 'FINALNA HYBRYDA'}
 ───────────────────────────────────────────────────────────────────────────────
 
-${lang === 'en' ? 'Intensity level' : 'Poziom intensywności'}: ${data.intensity}%
-${data.intensity <= 30
-  ? (lang === 'en' ? '→ Single project / pilot approach' : '→ Pojedynczy projekt / podejście pilotażowe')
-  : data.intensity <= 70
-  ? (lang === 'en' ? '→ Regular collaboration (several modules)' : '→ Regularna współpraca (kilka modułów)')
-  : (lang === 'en' ? '→ Full partnership program' : '→ Pełny program partnerski')
+${lang === 'en'
+  ? `Based on your selected areas of cooperation and scenarios, we propose a ${variant} collaboration program that combines:`
+  : `Na podstawie wybranych obszarów współpracy i scenariuszy proponujemy program współpracy ${variant}, który łączy:`
 }
 
-${(data.budgetMin || data.budgetMax) ? `
-${lang === 'en' ? 'Budget structure' : 'Struktura budżetowa'}:
-${data.budgetMin && data.budgetMax
-  ? `• ${lang === 'en' ? 'Monthly budget range' : 'Miesięczny zakres budżetowy'}: ${data.budgetMin}-${data.budgetMax} EUR`
-  : data.budgetMin
-    ? `• ${lang === 'en' ? 'Minimum monthly budget' : 'Minimalny budżet miesięczny'}: ${data.budgetMin} EUR`
-    : data.budgetMax
-      ? `• ${lang === 'en' ? 'Maximum monthly budget' : 'Maksymalny budżet miesięczny'}: ${data.budgetMax} EUR`
-      : ''
+${lang === 'en' ? 'SCOPE OF ACTIVITIES' : 'ZAKRES DZIAŁAŃ'}:
+${data.areasOfCooperation.length > 0
+  ? data.areasOfCooperation.slice(0, 5).map(area => `• ${area.replace(/_/g, ' ')}`).join('\n')
+  : (lang === 'en' ? '• To be defined based on discussion' : '• Do ustalenia na podstawie rozmowy')
 }
-` : ''}
 
-🌍 ${lang === 'en' ? 'TARGET MARKETS' : 'RYNKI DOCELOWE'}
-───────────────────────────────────────────────────────────────────────────────
+${lang === 'en' ? 'BILLING MODEL' : 'MODEL ROZLICZEŃ'}:
+${data.billingForm.length > 0
+  ? data.billingForm.map(billing => `• ${billing.replace(/_/g, ' ')}`).join('\n')
+  : (lang === 'en' ? '• Flexible billing model based on preferences' : '• Elastyczny model rozliczeń według preferencji')
+}
 
-${data.markets.map(market => `• ${market}`).join('\n')}
-
-${data.marketsDetails ? `
-${lang === 'en' ? 'Market focus' : 'Fokus rynkowy'}:
-${data.marketsDetails}
-` : ''}
+${lang === 'en' ? 'ENGAGEMENT LEVEL' : 'POZIOM ZAANGAŻOWANIA'}:
+${data.engagementScope.length > 0
+  ? data.engagementScope.map(scope => `• ${scope.replace(/_/g, ' ')}`).join('\n')
+  : (lang === 'en' ? '• To be agreed during consultation' : '• Do uzgodnienia podczas konsultacji')
+}
 
 🚀 ${lang === 'en' ? 'NEXT STEPS' : 'NASTĘPNE KROKI'}
 ───────────────────────────────────────────────────────────────────────────────
@@ -289,32 +301,30 @@ export async function POST(request: NextRequest) {
 
     // Set defaults for missing fields to prevent errors
     const processedData: FormData = {
-      // Section 1: Company Data
+      // Basic company info
       companyName: data.companyName || 'Company Name Not Provided',
       contactPerson: data.contactPerson || 'Contact Person Not Provided',
       contactRole: data.contactRole || '',
       contactEmail: data.contactEmail || 'email@example.com',
       
-      // Section 2: Modules
-      modules: Array.isArray(data.modules) ? data.modules : [],
+      // SEKCJA 1: Obszary współpracy
+      areasOfCooperation: Array.isArray(data.areasOfCooperation) ? data.areasOfCooperation : [],
       
-      // Section 3: Goals
-      goals: Array.isArray(data.goals) ? data.goals : [],
-      goalsDetails: data.goalsDetails || '',
+      // SEKCJA 2: Model współpracy i zaangażowania
+      cooperationModel: Array.isArray(data.cooperationModel) ? data.cooperationModel : [],
+      billingForm: Array.isArray(data.billingForm) ? data.billingForm : [],
+      engagementScope: Array.isArray(data.engagementScope) ? data.engagementScope : [],
+      teamIntegrationLevel: Array.isArray(data.teamIntegrationLevel) ? data.teamIntegrationLevel : [],
+      additionalPreferences: Array.isArray(data.additionalPreferences) ? data.additionalPreferences : [],
       
-      // Section 4: Intensity & Budget
-      intensity: typeof data.intensity === 'number' ? data.intensity : 50,
-      budgetMin: data.budgetMin || '',
-      budgetMax: data.budgetMax || '',
+      // SEKCJA 3: Scenariusze współpracy
+      selectedScenarios: Array.isArray(data.selectedScenarios) ? data.selectedScenarios : [],
       
-      // Section 5: Markets
-      markets: Array.isArray(data.markets) ? data.markets : ['Polska'],
-      marketsDetails: data.marketsDetails || '',
-      
-      // Section 6: Language & Email
+      // Additional options
       languageMode: data.languageMode || 'pl',
       sendEmail: Boolean(data.sendEmail),
-      emailToSend: data.emailToSend || ''
+      emailToSend: data.emailToSend || '',
+      additionalNotes: data.additionalNotes || ''
     };
 
     // Only validate if we have some actual user input
