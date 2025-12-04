@@ -371,16 +371,16 @@ export default function HomePage() {
                         ]
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -421,16 +421,16 @@ export default function HomePage() {
                         ]
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -468,16 +468,16 @@ export default function HomePage() {
                         ]
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -518,16 +518,16 @@ export default function HomePage() {
                         ]
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -568,16 +568,16 @@ export default function HomePage() {
                         ]
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -619,16 +619,16 @@ export default function HomePage() {
                       'Jesteśmy otwarci'
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -662,16 +662,16 @@ export default function HomePage() {
                       'Jesteśmy otwarci'
                     ];
                     return (
-                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
                         />
-                        <span className="text-xs leading-tight">{labels[index]}</span>
+                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
                       </label>
                     );
                   })}
