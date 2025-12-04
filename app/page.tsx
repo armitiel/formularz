@@ -204,7 +204,10 @@ export default function HomePage() {
               <div>
                 <h3 className="text-lg font-semibold text-zinc-100">{t.modalTitle}</h3>
                 <p className="text-xs text-zinc-300 mt-1">
-                  {t.modalSubtitle} {language === 'pl' ? 'jako plik' : 'as a'} {downloadFormat.toUpperCase()} {language === 'pl' ? 'file' : ''}.
+                  {language === 'pl'
+                    ? `Wygenerowana propozycja została automatycznie pobrana jako plik ${downloadFormat.toUpperCase()}.`
+                    : `Generated proposal has been automatically downloaded as a ${downloadFormat.toUpperCase()} file.`
+                  }
                 </p>
               </div>
               <button

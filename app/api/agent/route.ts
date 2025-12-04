@@ -70,7 +70,7 @@ async function generateCooperationProposal(data: FormData): Promise<string> {
   You are an expert assistant that builds and synthesizes B2B collaboration offers based on a structured questionnaire for Diasen Polska.
   
   CONTEXT:
-  The client is ${data.companyName} and they filled in a form with their collaboration preferences.
+  I am Amitiel Angelisme, a creative professional preparing a collaboration proposal for Diasen Polska based on their preferences.
   
   CLIENT DATA:
   - Company: ${data.companyName}
@@ -100,19 +100,27 @@ async function generateCooperationProposal(data: FormData): Promise<string> {
   LANGUAGE: ${data.languageMode === 'en' ? 'English only' : data.languageMode === 'pl' ? 'Polish only' : 'Both Polish and English'}
   
   YOUR TASK:
-  Create a clear, structured, premium-looking collaboration proposal ("FINALNA HYBRYDA") based on the selections above.
+  Create a clear, structured, premium-looking collaboration proposal based on the selections above.
+  
+  IMPORTANT REQUIREMENTS:
+  - Title should be simple: "A Collaboration Proposal for Diasen Polska"
+  - Start with "Dear DIASEN Team," / "Szanowni Państwo z DIASEN,"
+  - Use first-person language ("I propose", "I am", not "we")
+  - Do NOT use the word "Hybryda" anywhere in the content
+  - Sign as "Amitiel Angelisme" at the end
+  - Use **bold formatting** for section headers
   
   The output should include:
-  1. Wprowadzenie / kontekst współpracy
-  2. Wybrane obszary współpracy (podsumowanie wyborów klienta)
-  3. Proponowany model współpracy (odniesienie do SEKCJA 2 + scenariuszy)
-  4. Moduły / filary współpracy (opis hybrydy na bazie SEKCJA 1 i wybranych scenariuszy z SEKCJA 3)
-  5. Model rozliczeń i zaangażowania
-  6. Proponowany harmonogram / etapy
-  7. Wstępna wycena lub opis doprecyzowania wyceny
-  8. Podsumowanie i zaproszenie do rozmowy
+  1. Introduction / context of cooperation
+  2. Selected areas of cooperation (summary of client choices)
+  3. Proposed cooperation model (reference to SECTION 2 + scenarios)
+  4. Cooperation modules/pillars (description based on SECTION 1 and selected scenarios from SECTION 3)
+  5. Billing and engagement model
+  6. Proposed timeline / phases
+  7. Preliminary pricing or pricing clarification description
+  8. Summary and invitation to discussion
   
-  Use premium, calm, partnership tone with clear B2B language. If multiple areas are selected, combine them into a logical PROGRAM with modules.
+  Use premium, calm, partnership tone with clear B2B language.
   
   ${data.languageMode === 'en' ? 'IMPORTANT: Write the ENTIRE response in English only. Do not mix languages.' : data.languageMode === 'pl' ? 'IMPORTANT: Write the ENTIRE response in Polish only. Do not mix languages.' : 'Write in Polish first, then add English translation separated by divider.'}
   `;
@@ -169,13 +177,15 @@ function generateFallbackProposal(data: FormData): string {
   const isBoth = data.languageMode === 'both';
 
   const generateProposalContent = (lang: 'en' | 'pl') => {
-    return `${lang === 'en' ? 'Dear DIASEN Team,' : 'Szanowni Państwo z DIASEN,'}
+    return `**${lang === 'en' ? 'A Collaboration Proposal for Diasen Polska' : 'Propozycja Współpracy dla Diasen Polska'}**
+
+${lang === 'en' ? 'Dear DIASEN Team,' : 'Szanowni Państwo z DIASEN,'}
 
 ${lang === 'en'
   ? `I am pleased to present a comprehensive collaboration proposal tailored to your needs, focused on brand elevation and market presence enhancement for Diasen in Poland.`
   : `Mam przyjemność przedstawić kompleksową propozycję współpracy dostosowaną do Państwa potrzeb, skupioną na wzmocnieniu marki i obecności rynkowej Diasen w Polsce.`}
 
-**${lang === 'en' ? 'COLLABORATION PROPOSAL' : 'PROPOZYCJA WSPÓŁPRACY'}**
+**${lang === 'en' ? 'Introduction / Context of Cooperation' : 'Wprowadzenie / Kontekst współpracy'}**
 
 ${lang === 'en' ? 'Contact Information' : 'Informacje kontaktowe'}:
 ${lang === 'en' ? 'Company' : 'Firma'}: ${data.companyName}
@@ -262,8 +272,8 @@ ${data.engagementScope.length > 0
    • ${lang === 'en' ? 'Scale activities based on results' : 'Skalowanie działań na podstawie wyników'}
 
 ${lang === 'en'
-  ? `This document serves as a discussion basis. All parameters can be adjusted to meet ${data.companyName}'s specific needs and expectations.\n\nI am open to discussion of details and modifications to this proposal.\n\n**Best regards,**\n**Amitiel Angelisme**`
-  : `Ten dokument stanowi bazę do dyskusji. Wszystkie parametry można dostosować do specyficznych potrzeb i oczekiwań ${data.companyName}.\n\nJestem otwarty na rozmowę o szczegółach i modyfikacjach tej propozycji.\n\n**Z poważaniem,**\n**Amitiel Angelisme**`
+  ? `This document serves as a discussion basis. All parameters can be adjusted to meet your specific needs and expectations.\n\nI am open to discussion of details and modifications to this proposal.\n\n**Best regards,**\n**Amitiel Angelisme**`
+  : `Ten dokument stanowi bazę do dyskusji. Wszystkie parametry można dostosować do Państwa specyficznych potrzeb i oczekiwań.\n\nJestem otwarty na rozmowę o szczegółach i modyfikacjach tej propozycji.\n\n**Z poważaniem,**\n**Amitiel Angelisme**`
 }
 `;
   };

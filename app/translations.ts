@@ -337,7 +337,7 @@ export const translations: Record<'pl' | 'en', Translation> = {
     
     // Modal
     modalTitle: "Propozycja Współpracy",
-    modalSubtitle: "Wygenerowana propozycja została automatycznie pobrana jako plik PDF",
+    modalSubtitle: "",
     downloadConfirmation: "Propozycja została automatycznie pobrana jako plik tekstowy",
     
     // Common
@@ -571,7 +571,7 @@ export const translations: Record<'pl' | 'en', Translation> = {
     
     // Modal
     modalTitle: "Cooperation Proposal",
-    modalSubtitle: "Generated proposal has been automatically downloaded as a PDF file",
+    modalSubtitle: "",
     downloadConfirmation: "Proposal has been automatically downloaded as a text file",
     
     // Common
