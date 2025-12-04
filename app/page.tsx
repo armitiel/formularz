@@ -119,14 +119,14 @@ export default function HomePage() {
       });
 
       const data = await res.json();
-      const summary = data.summary || 'Brak odpowiedzi z backendu.';
+      const summary = data.summary || (language === 'pl' ? 'Brak odpowiedzi z backendu.' : 'No response from backend.');
 
       setResponse(summary);
       setShowResponse(true);
       setShowModal(true);
       downloadFile(summary);
     } catch (err) {
-      setResponse('Wystąpił błąd połączenia z backendem.');
+      setResponse(language === 'pl' ? 'Wystąpił błąd połączenia z backendem.' : 'Connection error occurred with backend.');
       setShowResponse(true);
       setShowModal(true);
     } finally {
@@ -463,7 +463,7 @@ export default function HomePage() {
               {/* E. Rozszerzona współpraca biznesowa */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  E. Rozszerzona współpraca biznesowa
+                  {t.areaE}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -474,14 +474,7 @@ export default function HomePage() {
                     'doradztwo_kreatywne_klienci',
                     'otwarci_biznesowa'
                   ].map((area, index) => {
-                    const labels = [
-                      'Współpraca jako niezależny partner',
-                      'Stała współpraca jako konsultant kreatywny',
-                      'Kampanie kwartalne / półroczne',
-                      'Prezentacje produktów Diasen u deweloperów',
-                      'Doradztwo kreatywne dla klientów',
-                      'Jesteśmy otwarci'
-                    ];
+                    const labels = t.areaEOptions;
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
@@ -502,7 +495,7 @@ export default function HomePage() {
               {/* F. Materiały edukacyjne i świadomościowe */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  F. Materiały edukacyjne i świadomościowe (dla szerokiej publiczności w Polsce)
+                  {t.areaF}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -519,20 +512,7 @@ export default function HomePage() {
                     'ogolnokrajowa_kampania',
                     'otwarci_edukacyjne'
                   ].map((area, index) => {
-                    const labels = [
-                      'Kampanie o akustyce mieszkań',
-                      'Materiały o zdrowych wnętrzach i mikroklimacie',
-                      'Treści storytellingowe dla zwykłych odbiorców',
-                      'Serie edukacyjne: reelsy, grafiki, krótkie filmy',
-                      'Porównania produktów Diasen z typowymi materiałami',
-                      'Kampanie dla nowych mieszkań i rodzin',
-                      'Ogólnokrajowa akcja ulotkowa z próbką farby',
-                      'Ulotki edukacyjne o korku (zdrowie, akustyka, mikroklimat)',
-                      'Dystrybucja na osiedlach, showroomach, w sklepach',
-                      'Ulotki z QR kodami (filmy, poradniki, galerie)',
-                      'Ogólnokrajowa kampania informacyjna',
-                      'Jesteśmy otwarci'
-                    ];
+                    const labels = t.areaFOptions;
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
@@ -553,7 +533,7 @@ export default function HomePage() {
               {/* G. Social Media — Kreacja, Strategia i Prowadzenie */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  G. Social Media — Kreacja, Strategia i Prowadzenie (Diasen Polska)
+                  {t.areaG}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -566,16 +546,7 @@ export default function HomePage() {
                     'wsparcie_eventy_targi',
                     'otwarci_social_media'
                   ].map((area, index) => {
-                    const labels = [
-                      'Prowadzenie oficjalnych profili Diasen Polska',
-                      'Współprowadzenie SM z działem marketingu',
-                      'Produkcja treści premium: foto, wideo, reels',
-                      'Budowa spójnej estetyki SM',
-                      'Serie edukacyjne pod social media',
-                      'Strategia komunikacji na polski rynek',
-                      'Wsparcie podczas eventów i targów',
-                      'Jesteśmy otwarci'
-                    ];
+                    const labels = t.areaGOptions;
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
@@ -596,7 +567,7 @@ export default function HomePage() {
               {/* H. Utworzenie lub współtworzenie działu marketingowego */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  H. Utworzenie lub współtworzenie działu marketingowego Diasen Polska
+                  {t.areaH}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -609,16 +580,7 @@ export default function HomePage() {
                     'rekrutacja_selekcja_wspolpracownicy',
                     'otwarci_dzial_marketingu'
                   ].map((area, index) => {
-                    const labels = [
-                      'Stworzenie od podstaw działu marketingu Diasen Polska',
-                      'Współtworzenie działu jako lider kreatywny',
-                      'Udział jako konsultant lub współprowadzący',
-                      'Opracowanie pełnej strategii wizerunku na rynek PL',
-                      'Wsparcie przy kampaniach i działaniach marketingowych',
-                      'Budowa polskiego brand booka Diasen',
-                      'Rekrutacja lub selekcja współpracowników',
-                      'Jesteśmy otwarci'
-                    ];
+                    const labels = t.areaHOptions;
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
@@ -641,26 +603,26 @@ export default function HomePage() {
             <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 2 — Model współpracy i zaangażowania</h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">{t.section2Title}</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    Proszę wybrać preferowany sposób współpracy i formę rozliczeń.
+                    {t.section2Description}
                   </p>
                 </div>
                 <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
-                  Sekcja 2/4
+                  {t.section2Of4}
                 </span>
               </div>
 
               {/* 1. Preferowany model współpracy */}
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-zinc-200">1. Preferowany model współpracy</h3>
+                <h3 className="text-sm font-semibold text-zinc-200">{t.preferredCooperationModel}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { value: 'projektowy', label: 'Projektowy (per projekt)' },
-                    { value: 'staly', label: 'Stały (miesięczny / retainer)' },
-                    { value: 'okresowy', label: 'Okresowy (kwartał / pół roku)' },
-                    { value: 'mieszany', label: 'Mieszany (stała część + projekty)' },
-                    { value: 'otwarci_model', label: 'Jesteśmy otwarci' }
+                    { value: 'projektowy', label: t.cooperationModelOptions[0] },
+                    { value: 'staly', label: t.cooperationModelOptions[1] },
+                    { value: 'okresowy', label: t.cooperationModelOptions[2] },
+                    { value: 'mieszany', label: t.cooperationModelOptions[3] },
+                    { value: 'otwarci_model', label: t.cooperationModelOptions[4] }
                   ].map((option) => (
                     <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
                       <input
@@ -679,14 +641,14 @@ export default function HomePage() {
 
               {/* 2. Forma rozliczeń */}
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-zinc-200">2. Forma rozliczeń</h3>
+                <h3 className="text-sm font-semibold text-zinc-200">{t.billingForm}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { value: 'miesieczna', label: 'Miesięczna' },
-                    { value: 'kwartalna', label: 'Kwartalna' },
-                    { value: 'polroczna', label: 'Półroczna' },
-                    { value: 'jednorazowa', label: 'Jednorazowa (per kampania)' },
-                    { value: 'otwarci_rozliczenia', label: 'Jesteśmy otwarci' }
+                    { value: 'miesieczna', label: t.billingFormOptions[0] },
+                    { value: 'kwartalna', label: t.billingFormOptions[1] },
+                    { value: 'polroczna', label: t.billingFormOptions[2] },
+                    { value: 'jednorazowa', label: t.billingFormOptions[3] },
+                    { value: 'otwarci_rozliczenia', label: t.billingFormOptions[4] }
                   ].map((option) => (
                     <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
                       <input
@@ -705,14 +667,14 @@ export default function HomePage() {
 
               {/* 3. Zakres zaangażowania */}
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-zinc-200">3. Zakres zaangażowania</h3>
+                <h3 className="text-sm font-semibold text-zinc-200">{t.engagementScope}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { value: 'dostepnosc_projektowa', label: 'Dostępność projektowa (ad-hoc)' },
-                    { value: 'stala_dostepnosc', label: 'Stała dostępność (określony wymiar godzin)' },
-                    { value: 'intensywna_kampania', label: 'Intensywna praca w czasie kampanii' },
-                    { value: 'doradztwo_kreatywne', label: 'Doradztwo kreatywne' },
-                    { value: 'otwarci_zaangażowanie', label: 'Jesteśmy otwarci' }
+                    { value: 'dostepnosc_projektowa', label: t.engagementScopeOptions[0] },
+                    { value: 'stala_dostepnosc', label: t.engagementScopeOptions[1] },
+                    { value: 'intensywna_kampania', label: t.engagementScopeOptions[2] },
+                    { value: 'doradztwo_kreatywne', label: t.engagementScopeOptions[3] },
+                    { value: 'otwarci_zaangażowanie', label: t.engagementScopeOptions[4] }
                   ].map((option) => (
                     <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
                       <input
@@ -731,13 +693,13 @@ export default function HomePage() {
 
               {/* 4. Poziom integracji z zespołem */}
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-zinc-200">4. Poziom integracji z zespołem</h3>
+                <h3 className="text-sm font-semibold text-zinc-200">{t.teamIntegrationLevel}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { value: 'praca_niezalezna', label: 'Praca niezależna' },
-                    { value: 'wspolpraca_dzial_marketingu', label: 'Praca we współpracy z działem marketingu' },
-                    { value: 'wspolne_dzialania_projekty', label: 'Wspólne działania przy projektach' },
-                    { value: 'otwarci_integracja', label: 'Jesteśmy otwarci' }
+                    { value: 'praca_niezalezna', label: t.teamIntegrationOptions[0] },
+                    { value: 'wspolpraca_dzial_marketingu', label: t.teamIntegrationOptions[1] },
+                    { value: 'wspolne_dzialania_projekty', label: t.teamIntegrationOptions[2] },
+                    { value: 'otwarci_integracja', label: t.teamIntegrationOptions[3] }
                   ].map((option) => (
                     <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
                       <input
@@ -756,13 +718,13 @@ export default function HomePage() {
 
               {/* 5. Preferencje dodatkowe */}
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-zinc-200">5. Preferencje dodatkowe</h3>
+                <h3 className="text-sm font-semibold text-zinc-200">{t.additionalPreferences}</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { value: 'raporty_dzialan', label: 'Raporty z działań' },
-                    { value: 'spojana_linia_kreatywna', label: 'Spójna linia kreatywna' },
-                    { value: 'budowanie_spolecznosci', label: 'Budowanie społeczności (architekci, wykonawcy)' },
-                    { value: 'otwarci_preferencje', label: 'Jesteśmy otwarci' }
+                    { value: 'raporty_dzialan', label: t.additionalPreferencesOptions[0] },
+                    { value: 'spojana_linia_kreatywna', label: t.additionalPreferencesOptions[1] },
+                    { value: 'budowanie_spolecznosci', label: t.additionalPreferencesOptions[2] },
+                    { value: 'otwarci_preferencje', label: t.additionalPreferencesOptions[3] }
                   ].map((option) => (
                     <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
                       <input
@@ -784,66 +746,25 @@ export default function HomePage() {
             <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 3 — Proponowane scenariusze współpracy</h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">{t.section3Title}</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    Można wybrać jedną lub kilka opcji. Finalna oferta będzie hybrydą wybranych elementów.
+                    {t.section3Description}
                   </p>
                 </div>
                 <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
-                  Sekcja 3/4
+                  {t.section3Of4}
                 </span>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  {
-                    value: 'scenariusz_1',
-                    title: 'SCENARIUSZ 1 — Marketingowo-Ambasadorski',
-                    description: 'Stała produkcja treści foto/wideo • Kampanie wizerunkowe • Rola ambasadora • Dokumentacja projektów • Storytelling marki'
-                  },
-                  {
-                    value: 'scenariusz_2',
-                    title: 'SCENARIUSZ 2 — Artystyczno-Eventowy',
-                    description: 'Murale wewnętrzne i fasadowe • Murale na wydarzeniach • Instalacje • Rozliczenia projektowe'
-                  },
-                  {
-                    value: 'scenariusz_3',
-                    title: 'SCENARIUSZ 3 — Hybryda Kreatywno-Marketingowa',
-                    description: 'Art + marketing • Prowadzenie social media • Treści premium • Storytelling • Elastyczne rozliczenia'
-                  },
-                  {
-                    value: 'scenariusz_4',
-                    title: 'SCENARIUSZ 4 — Rozwój Regionalny i Edukacja',
-                    description: 'Szkolenia dla architektów • Budowanie społeczności • Prezentacje dla deweloperów'
-                  },
-                  {
-                    value: 'scenariusz_5',
-                    title: 'SCENARIUSZ 5 — Minimalny Start (Light)',
-                    description: 'Pojedyncze projekty/kampanie • Możliwość rozszerzenia współpracy'
-                  },
-                  {
-                    value: 'scenariusz_6',
-                    title: 'SCENARIUSZ 6 — Ogólnokrajowa Kampania Edukacyjna',
-                    description: 'Akcja ulotkowa z próbkami farb • Edukacja o akustyce • Dystrybucja • Materiały edukacyjne'
-                  },
-                  {
-                    value: 'scenariusz_7',
-                    title: 'SCENARIUSZ 7 — Kampanie Świadomościowe',
-                    description: 'Serie edukacyjne • Analiza problemów mieszkań • Edukacja dla odbiorców'
-                  },
-                  {
-                    value: 'scenariusz_8',
-                    title: 'SCENARIUSZ 8 — Utworzenie Działu Marketingu',
-                    description: 'Stworzenie działu od zera • Kierunek kreatywny • Brand book PL • Rekrutacja'
-                  }
-                ].map((scenario) => (
-                  <div key={scenario.value} className="bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-black/40 transition-colors">
+                {t.scenarios.map((scenario, index) => (
+                  <div key={`scenariusz_${index + 1}`} className="bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-black/40 transition-colors">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         name="selectedScenarios"
-                        value={scenario.value}
-                        checked={formData.selectedScenarios.includes(scenario.value)}
+                        value={`scenariusz_${index + 1}`}
+                        checked={formData.selectedScenarios.includes(`scenariusz_${index + 1}`)}
                         onChange={handleCheckboxChange}
                         className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1"
                       />
@@ -861,20 +782,20 @@ export default function HomePage() {
             <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 4 — Finalna hybryda</h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">{t.section4Title}</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    Opcje dodatkowe i generowanie finalnej propozycji współpracy.
+                    {t.section4Description}
                   </p>
                 </div>
                 <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
-                  Sekcja 4/4
+                  {t.section4Of4}
                 </span>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-1.5">
                   <label htmlFor="additionalNotes" className="block text-xs font-semibold text-zinc-200">
-                    Dodatkowe uwagi lub komentarze
+                    {t.additionalNotes}
                   </label>
                   <textarea
                     id="additionalNotes"
@@ -882,12 +803,12 @@ export default function HomePage() {
                     value={formData.additionalNotes}
                     onChange={handleInputChange}
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[70px]"
-                    placeholder="np. preferencje dotyczące terminów, specjalne wymagania, dodatkowy kontekst"
+                    placeholder={t.additionalNotesPlaceholder}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-zinc-200">Język finalne propozycji</p>
+                  <p className="text-xs font-semibold text-zinc-200">{t.finalProposalLanguage}</p>
                   <div className="flex flex-wrap gap-3">
                     <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
                       <input
@@ -898,7 +819,7 @@ export default function HomePage() {
                         onChange={handleRadioChange}
                         className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
-                      <span>Polski</span>
+                      <span>{t.polishLanguage}</span>
                     </label>
                     <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
                       <input
@@ -909,7 +830,7 @@ export default function HomePage() {
                         onChange={handleRadioChange}
                         className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
-                      <span>Polski + angielski</span>
+                      <span>{t.polishAndEnglish}</span>
                     </label>
                   </div>
                 </div>
@@ -923,14 +844,14 @@ export default function HomePage() {
                       onChange={handleInputChange}
                       className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                     />
-                    <span>Wyślij propozycję emailem</span>
+                    <span>{t.sendByEmail}</span>
                   </label>
                 </div>
 
                 {formData.sendEmail && (
                   <div className="space-y-1.5">
                     <label htmlFor="emailToSend" className="block text-xs font-semibold text-zinc-200">
-                      Dodatkowy adres email (opcjonalnie)
+                      {t.additionalEmail}
                     </label>
                     <input
                       className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -939,7 +860,7 @@ export default function HomePage() {
                       name="emailToSend"
                       value={formData.emailToSend}
                       onChange={handleInputChange}
-                      placeholder="np. dyrektor@diasen.pl"
+                      placeholder={t.additionalEmailPlaceholder}
                     />
                   </div>
                 )}
@@ -953,7 +874,10 @@ export default function HomePage() {
                   i
                 </span>
                 <span>
-                  Po kliknięciu wygeneruję tekst oferty, pokażę podgląd i automatycznie pobiorę plik <span className="text-zinc-100 font-medium">.txt</span>.
+                  {language === 'pl'
+                    ? 'Po kliknięciu wygeneruję tekst oferty, pokażę podgląd i automatycznie pobiorę plik .txt.'
+                    : 'Upon clicking, I will generate the proposal text, show preview and automatically download a .txt file.'
+                  }
                 </span>
               </div>
               <button
@@ -967,11 +891,11 @@ export default function HomePage() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Generuję finalną hybrydę...</span>
+                    <span>{t.generating}</span>
                   </>
                 ) : (
                   <>
-                    <span className="mr-1.5">Wygeneruj finalną hybrydę</span>
+                    <span className="mr-1.5">{t.generateFinalHybrid}</span>
                     <span className="text-lg leading-none">↗</span>
                   </>
                 )}
@@ -982,7 +906,9 @@ export default function HomePage() {
           {/* Response box */}
           {showResponse && (
             <div className="border-t border-white/20 px-5 md:px-8 py-4 md:py-5">
-              <p className="text-xs uppercase tracking-[0.18em] text-zinc-300 mb-2">Podgląd wygenerowanego tekstu</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-zinc-300 mb-2">
+                {language === 'pl' ? 'Podgląd wygenerowanego tekstu' : 'Generated text preview'}
+              </p>
               <div className="rounded-2xl bg-black/60 backdrop-blur-sm border border-white/20 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-zinc-100 whitespace-pre-wrap font-mono">
                 {response}
               </div>
