@@ -270,8 +270,8 @@ ${lang === 'en' ? 'PROPOSED IMPLEMENTATION PROCESS' : 'PROPONOWANY PROCES WDROŻ
 
 ═══════════════════════════════════════════════════════════════════════════════
 ${lang === 'en'
-  ? `This document serves as a discussion basis. All parameters can be adjusted to meet ${data.companyName}'s specific needs and expectations.`
-  : `Ten dokument stanowi bazę do dyskusji. Wszystkie parametry można dostosować do specyficznych potrzeb i oczekiwań ${data.companyName}.`
+  ? `This document serves as a discussion basis. All parameters can be adjusted to meet ${data.companyName}'s specific needs and expectations.\n\nI am open to discussion of details and modifications to this proposal.\n\n— Amitiel Angelisme`
+  : `Ten dokument stanowi bazę do dyskusji. Wszystkie parametry można dostosować do specyficznych potrzeb i oczekiwań ${data.companyName}.\n\nJestem otwarty na rozmowę o szczegółach i modyfikacjach tej propozycji.\n\n— Amitiel Angelisme`
 }
 ═══════════════════════════════════════════════════════════════════════════════
 `;

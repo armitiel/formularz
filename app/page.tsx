@@ -62,6 +62,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState('');
   const [showResponse, setShowResponse] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -120,17 +121,74 @@ export default function HomePage() {
 
       setResponse(summary);
       setShowResponse(true);
+      setShowModal(true);
       downloadFile(summary);
     } catch (err) {
       setResponse('Wystąpił błąd połączenia z backendem.');
       setShowResponse(true);
+      setShowModal(true);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    showForm ? (
+    <>
+      {/* Modal for displaying proposal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-black/80 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl shadow-black/60 w-full max-w-4xl max-h-[90vh] overflow-hidden">
+            {/* Modal Header */}
+            <div className="border-b border-white/20 px-6 py-4 flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-zinc-100">Finalna Hybryda - Propozycja Współpracy</h3>
+                <p className="text-xs text-zinc-300 mt-1">Wygenerowana propozycja została automatycznie pobrana jako plik .txt</p>
+              </div>
+              <button
+                onClick={() => setShowModal(false)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-zinc-300 hover:text-zinc-100 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* Modal Content */}
+            <div className="p-6 overflow-auto max-h-[calc(90vh-140px)]">
+              <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl px-6 py-4">
+                <div className="text-xs md:text-sm leading-relaxed text-zinc-100 whitespace-pre-wrap font-mono">
+                  {response}
+                </div>
+              </div>
+              
+              {/* Modal Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-white/10">
+                <div className="text-xs text-zinc-400 flex items-center gap-2">
+                  <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/20 border border-emerald-400/30">
+                    ✓
+                  </span>
+                  <span>Propozycja została automatycznie pobrana jako plik tekstowy</span>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => downloadFile(response)}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-zinc-200 hover:text-zinc-100 text-sm rounded-xl transition-colors border border-white/20"
+                  >
+                    Pobierz ponownie
+                  </button>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-6 py-2 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-200 text-sm"
+                  >
+                    Zamknij
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+    {showForm ? (
       // Form Page with tlo background
       <div
         className="min-h-screen bg-customStone/25 text-zinc-100 overflow-hidden"
@@ -925,12 +983,22 @@ export default function HomePage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 px-5 py-2.5 text-xs md:text-sm font-semibold text-black shadow-lg shadow-amber-500/40 hover:shadow-amber-500/60 hover:-translate-y-0.5 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 focus:ring-offset-transparent disabled:opacity-60 disabled:hover:translate-y-0"
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 px-5 py-2.5 text-xs md:text-sm font-semibold text-black shadow-lg shadow-amber-500/40 hover:shadow-amber-500/60 hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 focus:ring-offset-transparent disabled:opacity-60 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
               >
-                <span className="mr-1.5">
-                  {isLoading ? 'Generuję podsumowanie...' : 'Wygeneruj podsumowanie oferty'}
-                </span>
-                <span className="text-lg leading-none">↗</span>
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Generuję finalną hybrydę...</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="mr-1.5">Wygeneruj finalną hybrydę</span>
+                    <span className="text-lg leading-none">↗</span>
+                  </>
+                )}
               </button>
             </div>
           </form>
@@ -957,43 +1025,43 @@ export default function HomePage() {
           backgroundPosition: 'center'
         }}
       >
-        <div className="w-full max-w-[1920px] h-screen relative mx-auto">
-          {/* Main Content - Left Column Only */}
-          <div className="absolute left-[254px] top-[136px] w-[620px] inline-flex flex-col justify-start items-start gap-8">
+        <div className="w-full max-w-[1920px] min-h-screen relative mx-auto">
+          {/* Main Content - Mobile Responsive */}
+          <div className="absolute left-4 md:left-[254px] top-[120px] md:top-[136px] w-[calc(100%-2rem)] md:w-[620px] inline-flex flex-col justify-start items-start gap-6 md:gap-8 px-4 md:px-0">
             <div className="self-stretch justify-start">
-              <span className="text-black text-4xl font-bold font-['Arial'] leading-[48px]">
+              <span className="text-black text-2xl md:text-4xl font-bold font-['Arial'] leading-8 md:leading-[48px]">
                 {language === 'pl' ? 'Propozycja: ' : 'Proposal: '}
               </span>
-              <span className="text-black text-4xl font-normal font-['Arial'] leading-[48px]">
+              <span className="text-black text-2xl md:text-4xl font-normal font-['Arial'] leading-8 md:leading-[48px]">
                 {language === 'pl'
                   ? 'Ambasador Kreatywny i Partner ds. Storytelling Marki dla Diasen'
                   : 'Creative Ambassador & Brand Storytelling Partner for Diasen'}
               </span>
             </div>
-            <div className="self-stretch justify-start text-gray-800 text-lg font-normal font-['Inter'] leading-7">
+            <div className="self-stretch justify-start text-gray-800 text-base md:text-lg font-normal font-['Inter'] leading-6 md:leading-7">
               {language === 'pl'
                 ? 'Jako ambasador kreatywny Diasen, moja rola skupia się na wizualnym wzbogaceniu, storytelling marki i aplikacjach artystycznych. Cel: dodanie prestiżu, widoczności i głębi narracyjnej do obecności Diasen w kontekstach zorientowanych na design, od architektury do sztuki, od mediów społecznościowych po instalacje w rzeczywistości.'
                 : 'As a creative ambassador for Diasen, my role focuses on visual elevation, brand storytelling, and artistic application. The goal: to add prestige, visibility, and narrative depth to Diasen\'s presence in design-forward contexts, from architecture to art, from social media to real-life installations.'}
             </div>
-            
-            {/* CTA Button with Language Selector */}
-            <div className="flex items-center gap-4 mt-8">
+
+            {/* CTA Button with Language Selector - Mobile Responsive */}
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mt-4 md:mt-8 w-full">
               <button
                 onClick={() => setShowForm(true)}
-                className="px-8 py-4 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm md:text-base w-full md:w-auto text-center"
               >
                 {language === 'pl'
                   ? 'Rozpocznij Formularz Współpracy'
                   : 'Start Collaboration Form'}
               </button>
-              
-              {/* Language Selector next to CTA */}
-              <div className="flex items-center gap-3 bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3 border border-black/20">
+
+              {/* Language Selector - Mobile Responsive */}
+              <div className="flex items-center gap-3 bg-black/20 backdrop-blur-sm rounded-xl px-3 md:px-4 py-2 md:py-3 border border-black/20 w-full md:w-auto justify-center md:justify-start">
                 <div className="flex -space-x-2">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-customStone to-zinc-400 border border-black/30 flex items-center justify-center text-[10px] font-semibold text-white">
+                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-tr from-customStone to-zinc-400 border border-black/30 flex items-center justify-center text-[9px] md:text-[10px] font-semibold text-white">
                     D
                   </div>
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-black/30 flex items-center justify-center text-[10px] font-semibold text-black">
+                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-black/30 flex items-center justify-center text-[9px] md:text-[10px] font-semibold text-black">
                     A
                   </div>
                 </div>
@@ -1011,5 +1079,6 @@ export default function HomePage() {
         </div>
       </div>
     )
+    </>
   );
 }
