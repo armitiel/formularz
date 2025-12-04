@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { translations, Translation } from './translations';
+import jsPDF from 'jspdf';
 
 interface FormData {
   // Basic company info
@@ -65,6 +66,7 @@ export default function HomePage() {
   const [response, setResponse] = useState('');
   const [showResponse, setShowResponse] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [downloadFormat, setDownloadFormat] = useState<'txt' | 'pdf'>('pdf');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -95,7 +97,15 @@ export default function HomePage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const downloadFile = (text: string, filename = 'propozycja-wspolpracy-diasen.txt') => {
+  const downloadFile = (text: string, format: 'txt' | 'pdf' = downloadFormat) => {
+    if (format === 'pdf') {
+      downloadPDF(text);
+    } else {
+      downloadTXT(text);
+    }
+  };
+
+  const downloadTXT = (text: string, filename = 'propozycja-wspolpracy-diasen.txt') => {
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -105,6 +115,44 @@ export default function HomePage() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const downloadPDF = (text: string, filename = 'propozycja-wspolpracy-diasen.pdf') => {
+    const doc = new jsPDF();
+    
+    // Add title with styling
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Propozycja Współpracy - Diasen', 20, 30);
+    
+    // Add subtitle
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Creative Ambassador & Brand Storytelling Partner', 20, 45);
+    
+    // Add line separator
+    doc.setLineWidth(0.5);
+    doc.line(20, 55, 190, 55);
+    
+    // Configure text formatting
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    
+    // Split text into lines and add to PDF
+    const splitText = doc.splitTextToSize(text, 170);
+    let yPosition = 70;
+    
+    splitText.forEach((line: string) => {
+      if (yPosition > 270) { // Add new page when needed
+        doc.addPage();
+        yPosition = 20;
+      }
+      doc.text(line, 20, yPosition);
+      yPosition += 6;
+    });
+    
+    // Save the PDF
+    doc.save(filename);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -124,7 +172,7 @@ export default function HomePage() {
       setResponse(summary);
       setShowResponse(true);
       setShowModal(true);
-      downloadFile(summary);
+      downloadFile(summary, downloadFormat);
     } catch (err) {
       setResponse(language === 'pl' ? 'Wystąpił błąd połączenia z backendem.' : 'Connection error occurred with backend.');
       setShowResponse(true);
@@ -170,12 +218,36 @@ export default function HomePage() {
                   </span>
                   <span>{t.downloadConfirmation}</span>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-3 items-center flex-wrap">
+                  {/* Format Selection */}
+                  <div className="flex gap-2 text-xs">
+                    <button
+                      onClick={() => setDownloadFormat('pdf')}
+                      className={`px-3 py-1 rounded-lg transition-colors ${
+                        downloadFormat === 'pdf'
+                          ? 'bg-amber-500/20 text-amber-200 border border-amber-400/30'
+                          : 'bg-white/10 text-zinc-300 border border-white/20'
+                      }`}
+                    >
+                      PDF
+                    </button>
+                    <button
+                      onClick={() => setDownloadFormat('txt')}
+                      className={`px-3 py-1 rounded-lg transition-colors ${
+                        downloadFormat === 'txt'
+                          ? 'bg-amber-500/20 text-amber-200 border border-amber-400/30'
+                          : 'bg-white/10 text-zinc-300 border border-white/20'
+                      }`}
+                    >
+                      TXT
+                    </button>
+                  </div>
+                  
                   <button
-                    onClick={() => downloadFile(response)}
+                    onClick={() => downloadFile(response, downloadFormat)}
                     className="px-4 py-2 bg-white/10 hover:bg-white/20 text-zinc-200 hover:text-zinc-100 text-sm rounded-xl transition-colors border border-white/20"
                   >
-                    {t.downloadAgain}
+                    {t.downloadAgain} ({downloadFormat.toUpperCase()})
                   </button>
                   <button
                     onClick={() => setShowModal(false)}
@@ -875,8 +947,8 @@ export default function HomePage() {
                 </span>
                 <span>
                   {language === 'pl'
-                    ? 'Po kliknięciu wygeneruję tekst oferty, pokażę podgląd i automatycznie pobiorę plik .txt.'
-                    : 'Upon clicking, I will generate the proposal text, show preview and automatically download a .txt file.'
+                    ? `Po kliknięciu wygeneruję tekst oferty, pokażę podgląd i automatycznie pobiorę plik ${downloadFormat.toUpperCase()}.`
+                    : `Upon clicking, I will generate the proposal text, show preview and automatically download a ${downloadFormat.toUpperCase()} file.`
                   }
                 </span>
               </div>
@@ -909,7 +981,7 @@ export default function HomePage() {
               <p className="text-xs uppercase tracking-[0.18em] text-zinc-300 mb-2">
                 {language === 'pl' ? 'Podgląd wygenerowanego tekstu' : 'Generated text preview'}
               </p>
-              <div className="rounded-2xl bg-black/60 backdrop-blur-sm border border-white/20 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-zinc-100 whitespace-pre-wrap font-mono">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-sm border border-white/20 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-zinc-100 whitespace-pre-wrap font-['Inter']">
                 {response}
               </div>
             </div>
@@ -931,10 +1003,10 @@ export default function HomePage() {
           {/* Main Content - Mobile Responsive */}
           <div className="absolute left-4 md:left-[254px] top-[120px] md:top-[136px] w-[calc(100%-2rem)] md:w-[620px] inline-flex flex-col justify-start items-start gap-6 md:gap-8 px-4 md:px-0">
             <div className="self-stretch justify-start">
-              <span className="text-black text-2xl md:text-4xl font-bold font-['Arial'] leading-8 md:leading-[48px]">
+              <span className="text-black text-2xl md:text-4xl font-bold font-['Inter'] leading-8 md:leading-[48px]">
                 {language === 'pl' ? 'Propozycja: ' : 'Proposal: '}
               </span>
-              <span className="text-black text-2xl md:text-4xl font-normal font-['Arial'] leading-8 md:leading-[48px]">
+              <span className="text-black text-2xl md:text-4xl font-normal font-['Inter'] leading-8 md:leading-[48px]">
                 {language === 'pl'
                   ? 'Ambasador Kreatywny i Partner ds. Storytelling Marki dla Diasen'
                   : 'Creative Ambassador & Brand Storytelling Partner for Diasen'}

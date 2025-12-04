@@ -119,7 +119,7 @@ export const translations: Record<'pl' | 'en', Translation> = {
     backToIntro: "← Powrót do wprowadzenia",
     interactiveGenerator: "Interaktywny generator propozycji współpracy",
     collaborationProgram: "Program współpracy – kreatywno-strategiczny partner",
-    fillSectionsDescription: "Wypełnij kilka sekcji, a system automatycznie wygeneruje gotowy tekst oferty oraz pobierze plik .txt, który możesz od razu dołączyć do maila lub prezentacji – bez ręcznego kopiowania.",
+    fillSectionsDescription: "Wypełnij kilka sekcji, a system automatycznie wygeneruje gotowy tekst oferty oraz pobierze plik PDF, który możesz od razu dołączyć do maila lub prezentacji – bez ręcznego kopiowania.",
     offerConfiguration: "Konfiguracja oferty",
     sectionsDescription: "Sekcje formularza odpowiadają elementom planu współpracy z Diasen.",
     sharedVision: "Ty + Diasen / wspólna wizja",
@@ -330,8 +330,8 @@ export const translations: Record<'pl' | 'en', Translation> = {
     additionalEmailPlaceholder: "np. dyrektor@diasen.pl",
     
     // Buttons and actions
-    generateFinalHybrid: "Wygeneruj finalną hybrydę",
-    generating: "Generuję finalną hybrydę...",
+    generateFinalHybrid: "Wygeneruj ofertę",
+    generating: "Generuję ofertę...",
     downloadAgain: "Pobierz ponownie",
     close: "Zamknij",
     
@@ -353,7 +353,7 @@ export const translations: Record<'pl' | 'en', Translation> = {
     backToIntro: "← Back to Introduction",
     interactiveGenerator: "Interactive collaboration proposal generator",
     collaborationProgram: "Collaboration Program – Creative-Strategic Partner",
-    fillSectionsDescription: "Fill out a few sections and the system will automatically generate a ready proposal text and download a .txt file that you can immediately attach to an email or presentation.",
+    fillSectionsDescription: "Fill out a few sections and the system will automatically generate a ready proposal text and download a PDF file that you can immediately attach to an email or presentation.",
     offerConfiguration: "Offer Configuration",
     sectionsDescription: "Form sections correspond to collaboration plan elements with Diasen.",
     sharedVision: "You + Diasen / shared vision",
@@ -564,8 +564,8 @@ export const translations: Record<'pl' | 'en', Translation> = {
     additionalEmailPlaceholder: "e.g. director@diasen.pl",
     
     // Buttons and actions
-    generateFinalHybrid: "Generate Final Hybrid",
-    generating: "Generating final hybrid...",
+    generateFinalHybrid: "Generate Offer",
+    generating: "Generating offer...",
     downloadAgain: "Download again",
     close: "Close",
     
