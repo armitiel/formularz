@@ -332,27 +332,6 @@ export default function HomePage() {
 
         {/* Main Form Card */}
         <div className="rounded-3xl bg-black/40 backdrop-blur-md border border-white/20 shadow-2xl shadow-black/40">
-          <div className="border-b border-white/20 px-5 md:px-8 py-4 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-zinc-300">
-                {t.offerConfiguration}
-              </p>
-              <p className="text-sm text-zinc-200 mt-1">
-                {t.sectionsDescription}
-              </p>
-            </div>
-            <div className="flex items-center gap-3 text-xs text-zinc-300">
-              <div className="flex -space-x-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-customStone to-zinc-400 border border-black flex items-center justify-center text-[10px] font-semibold">
-                  D
-                </div>
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-black flex items-center justify-center text-[10px] font-semibold text-black">
-                  A
-                </div>
-              </div>
-              <span>{t.sharedVision}</span>
-            </div>
-          </div>
 
           <form onSubmit={handleSubmit} className="px-5 md:px-8 py-6 md:py-8 space-y-8 text-sm">
             {/* Basic Company Info */}
