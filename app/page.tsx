@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { translations, Translation } from './translations';
-import jsPDF from 'jspdf';
 
 interface FormData {
   // Basic company info
@@ -97,9 +96,9 @@ export default function HomePage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const downloadFile = (text: string, format: 'txt' | 'pdf' = downloadFormat) => {
+  const downloadFile = async (text: string, format: 'txt' | 'pdf' = downloadFormat) => {
     if (format === 'pdf') {
-      downloadPDF(text);
+      await downloadPDF(text);
     } else {
       downloadTXT(text);
     }
@@ -117,42 +116,50 @@ export default function HomePage() {
     URL.revokeObjectURL(url);
   };
 
-  const downloadPDF = (text: string, filename = 'propozycja-wspolpracy-diasen.pdf') => {
-    const doc = new jsPDF();
-    
-    // Add title with styling
-    doc.setFontSize(20);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Propozycja Współpracy - Diasen', 20, 30);
-    
-    // Add subtitle
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Creative Ambassador & Brand Storytelling Partner', 20, 45);
-    
-    // Add line separator
-    doc.setLineWidth(0.5);
-    doc.line(20, 55, 190, 55);
-    
-    // Configure text formatting
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    
-    // Split text into lines and add to PDF
-    const splitText = doc.splitTextToSize(text, 170);
-    let yPosition = 70;
-    
-    splitText.forEach((line: string) => {
-      if (yPosition > 270) { // Add new page when needed
-        doc.addPage();
-        yPosition = 20;
-      }
-      doc.text(line, 20, yPosition);
-      yPosition += 6;
-    });
-    
-    // Save the PDF
-    doc.save(filename);
+  const downloadPDF = async (text: string, filename = 'propozycja-wspolpracy-diasen.pdf') => {
+    try {
+      // Dynamic import for client-side only
+      const { default: jsPDF } = await import('jspdf');
+      const doc = new jsPDF();
+      
+      // Add title with styling
+      doc.setFontSize(20);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Propozycja Współpracy - Diasen', 20, 30);
+      
+      // Add subtitle
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Creative Ambassador & Brand Storytelling Partner', 20, 45);
+      
+      // Add line separator
+      doc.setLineWidth(0.5);
+      doc.line(20, 55, 190, 55);
+      
+      // Configure text formatting
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      
+      // Split text into lines and add to PDF
+      const splitText = doc.splitTextToSize(text, 170);
+      let yPosition = 70;
+      
+      splitText.forEach((line: string) => {
+        if (yPosition > 270) { // Add new page when needed
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.text(line, 20, yPosition);
+        yPosition += 6;
+      });
+      
+      // Save the PDF
+      doc.save(filename);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      // Fallback to TXT if PDF generation fails
+      downloadTXT(text, filename.replace('.pdf', '.txt'));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -172,7 +179,7 @@ export default function HomePage() {
       setResponse(summary);
       setShowResponse(true);
       setShowModal(true);
-      downloadFile(summary, downloadFormat);
+      await downloadFile(summary, downloadFormat);
     } catch (err) {
       setResponse(language === 'pl' ? 'Wystąpił błąd połączenia z backendem.' : 'Connection error occurred with backend.');
       setShowResponse(true);
@@ -936,6 +943,37 @@ export default function HomePage() {
                     />
                   </div>
                 )}
+
+                {/* Download Format Selection */}
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-zinc-200">
+                    {language === 'pl' ? 'Format pobierania' : 'Download format'}
+                  </p>
+                  <div className="flex gap-3">
+                    <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
+                      <input
+                        type="radio"
+                        name="downloadFormat"
+                        value="pdf"
+                        checked={downloadFormat === 'pdf'}
+                        onChange={(e) => setDownloadFormat(e.target.value as 'pdf' | 'txt')}
+                        className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
+                      />
+                      <span>PDF</span>
+                    </label>
+                    <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
+                      <input
+                        type="radio"
+                        name="downloadFormat"
+                        value="txt"
+                        checked={downloadFormat === 'txt'}
+                        onChange={(e) => setDownloadFormat(e.target.value as 'pdf' | 'txt')}
+                        className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
+                      />
+                      <span>TXT</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </section>
 
