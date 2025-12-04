@@ -30,9 +30,9 @@ interface FormData {
 async function generateCooperationProposal(data: FormData): Promise<string> {
   // Determine collaboration variant based on modules count and intensity
   const getCollaborationVariant = () => {
-    const moduleCount = data.modules.length;
-    if (moduleCount <= 2 || data.intensity <= 30) return 'BASIC';
-    if (moduleCount <= 5 || data.intensity <= 70) return 'PLUS';
+    const totalSelections = data.areasOfCooperation.length + data.selectedScenarios.length;
+    if (totalSelections <= 3) return 'BASIC';
+    if (totalSelections <= 6) return 'PLUS';
     return 'PRO';
   };
 
