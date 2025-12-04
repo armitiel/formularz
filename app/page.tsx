@@ -68,8 +68,17 @@ export default function HomePage() {
   const [showResponse, setShowResponse] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    if (type === 'checkbox') {
+      const { checked } = e.target as HTMLInputElement;
+      if (name === 'sendEmail') {
+        setFormData(prev => ({ ...prev, [name]: checked }));
+      }
+    } else if (type === 'range' || name === 'intensity') {
+      setFormData(prev => ({ ...prev, [name]: parseInt(value) }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,17 +208,17 @@ export default function HomePage() {
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label htmlFor="yourName" className="block text-xs font-semibold text-zinc-200">
-                    Twoje imię / marka
+                  <label htmlFor="contactPerson" className="block text-xs font-semibold text-zinc-200">
+                    Osoba kontaktowa
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
                     type="text"
-                    id="yourName"
-                    name="yourName"
-                    value={formData.yourName}
+                    id="contactPerson"
+                    name="contactPerson"
+                    value={formData.contactPerson}
                     onChange={handleInputChange}
-                    placeholder="np. Amitiel Angelisme / Raster"
+                    placeholder="np. Jan Kowalski"
                     required
                   />
                 </div>
@@ -246,17 +255,17 @@ export default function HomePage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="roleTitle" className="block text-xs font-semibold text-zinc-200">
-                    Nazwa roli (opcjonalnie)
+                  <label htmlFor="contactRole" className="block text-xs font-semibold text-zinc-200">
+                    Rola / stanowisko (opcjonalnie)
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
                     type="text"
-                    id="roleTitle"
-                    name="roleTitle"
-                    value={formData.roleTitle}
+                    id="contactRole"
+                    name="contactRole"
+                    value={formData.contactRole}
                     onChange={handleInputChange}
-                    placeholder="np. Strategic Creative Partner"
+                    placeholder="np. Kierownik Marketingu"
                   />
                 </div>
               </div>
@@ -288,9 +297,9 @@ export default function HomePage() {
                     <label key={activity.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 cursor-pointer">
                       <input
                         type="checkbox"
-                        name="activities"
+                        name="modules"
                         value={activity.value}
-                        checked={formData.activities.includes(activity.value)}
+                        checked={formData.modules.includes(activity.value)}
                         onChange={handleCheckboxChange}
                         className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
@@ -301,39 +310,25 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="diasenTime" className="block text-xs font-semibold text-zinc-200">
-                  Szacunkowy udział czasu dedykowany Diasen
+                <label htmlFor="intensity" className="block text-xs font-semibold text-zinc-200">
+                  Intensywność współpracy
                 </label>
                 <div className="flex items-center gap-3">
                   <input
                     className="w-full accent-amber-400"
                     type="range"
-                    id="diasenTime"
-                    name="diasenTime"
-                    min="10"
+                    id="intensity"
+                    name="intensity"
+                    min="0"
                     max="100"
-                    step="5"
-                    value={formData.diasenTime}
+                    step="10"
+                    value={formData.intensity}
                     onChange={handleInputChange}
                   />
                   <span className="text-xs font-semibold text-amber-300 w-10 text-right">
-                    {formData.diasenTime}%
+                    {formData.intensity}%
                   </span>
                 </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label htmlFor="presenceForm" className="block text-xs font-semibold text-zinc-200">
-                  W jakiej formie możesz być „na ich podwórku"? (krótki opis)
-                </label>
-                <textarea
-                  id="presenceForm"
-                  name="presenceForm"
-                  value={formData.presenceForm}
-                  onChange={handleInputChange}
-                  className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[80px]"
-                  placeholder="np. hybrydowo: praca zdalna + okresowe wyjazdy do Polski na kluczowe realizacje, sesje materiałowe i spotkania z zespołem."
-                />
               </div>
             </section>
 
@@ -353,100 +348,33 @@ export default function HomePage() {
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label htmlFor="monthlyMin" className="block text-xs font-semibold text-zinc-200">
-                    Szacowany budżet miesięczny – minimum (€)
+                  <label htmlFor="budgetMin" className="block text-xs font-semibold text-zinc-200">
+                    Minimalny budżet miesięczny (€)
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
                     type="number"
-                    id="monthlyMin"
-                    name="monthlyMin"
-                    value={formData.monthlyMin}
+                    id="budgetMin"
+                    name="budgetMin"
+                    value={formData.budgetMin}
                     onChange={handleInputChange}
                     placeholder="np. 5000"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="monthlyMax" className="block text-xs font-semibold text-zinc-200">
-                    Szacowany budżet miesięczny – maksimum (€)
+                  <label htmlFor="budgetMax" className="block text-xs font-semibold text-zinc-200">
+                    Maksymalny budżet miesięczny (€)
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
                     type="number"
-                    id="monthlyMax"
-                    name="monthlyMax"
-                    value={formData.monthlyMax}
+                    id="budgetMax"
+                    name="budgetMax"
+                    value={formData.budgetMax}
                     onChange={handleInputChange}
                     placeholder="np. 8000"
                   />
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <p className="text-xs font-semibold text-zinc-200">
-                  Czy chcesz zaproponować mechanizm bezpieczeństwa / zwrotu?
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
-                    <input
-                      type="radio"
-                      name="refundMechanism"
-                      value="tak"
-                      checked={formData.refundMechanism === 'tak'}
-                      onChange={handleRadioChange}
-                      className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
-                    />
-                    <span>Tak – chcę to podkreślić</span>
-                  </label>
-                  <label className="inline-flex items-center gap-2 text-xs text-zinc-300">
-                    <input
-                      type="radio"
-                      name="refundMechanism"
-                      value="nie"
-                      checked={formData.refundMechanism === 'nie'}
-                      onChange={handleRadioChange}
-                      className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
-                    />
-                    <span>Nie – standardowe rozliczenie etapami</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label htmlFor="refundType" className="block text-xs font-semibold text-zinc-200">
-                  Forma „bezpieczeństwa" dla klienta
-                </label>
-                <select
-                  id="refundType"
-                  name="refundType"
-                  value={formData.refundType}
-                  onChange={handleInputChange}
-                  className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
-                >
-                  <option value="dodatkowa_praca">
-                    Dodatkowa praca / poprawki bez dodatkowych kosztów
-                  </option>
-                  <option value="czesciowy_zwrot">
-                    Częściowy zwrot vs ustalone KPI / przesunięcie budżetu
-                  </option>
-                  <option value="kamienie_milowe">
-                    Rozliczanie kamieniami milowymi (płatność po akceptacji)
-                  </option>
-                </select>
-              </div>
-
-              <div className="space-y-1.5">
-                <label htmlFor="metrics" className="block text-xs font-semibold text-zinc-200">
-                  Jakie wskaźniki chcesz zaproponować jako mierniki efektu?
-                </label>
-                <textarea
-                  id="metrics"
-                  name="metrics"
-                  value={formData.metrics}
-                  onChange={handleInputChange}
-                  className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[80px]"
-                  placeholder="np. ilość zapytań od architektów, zaangażowanie w social media, liczba referencyjnych realizacji z użyciem Diasen, liczba publikacji PR itp."
-                />
               </div>
             </section>
 
@@ -465,13 +393,13 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="goals" className="block text-xs font-semibold text-zinc-200">
-                  Główne cele twojej współpracy z Diasen
+                <label htmlFor="goalsDetails" className="block text-xs font-semibold text-zinc-200">
+                  Główne cele współpracy (szczegóły)
                 </label>
                 <textarea
-                  id="goals"
-                  name="goals"
-                  value={formData.goals}
+                  id="goalsDetails"
+                  name="goalsDetails"
+                  value={formData.goalsDetails}
                   onChange={handleInputChange}
                   className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[90px]"
                   placeholder="np. podniesienie postrzegania marki Diasen wśród architektów jako partnera premium, stworzenie biblioteki materiałów editorial, zbudowanie narracji łączącej technologię, zdrowy mikroklimat i design."
@@ -503,16 +431,16 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="extraNotes" className="block text-xs font-semibold text-zinc-200">
-                  Dodatkowe uwagi / kontekst
+                <label htmlFor="marketsDetails" className="block text-xs font-semibold text-zinc-200">
+                  Dodatkowe uwagi o rynkach
                 </label>
                 <textarea
-                  id="extraNotes"
-                  name="extraNotes"
-                  value={formData.extraNotes}
+                  id="marketsDetails"
+                  name="marketsDetails"
+                  value={formData.marketsDetails}
                   onChange={handleInputChange}
                   className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[70px]"
-                  placeholder="np. odniesienie do prezentacji, którą już widzieli; pomysł na pilotażową kampanię lub mural referencyjny; sposób włączenia twoich dotychczasowych realizacji."
+                  placeholder="np. skupienie na segmencie premium, luksusowe projekty mieszkaniowe"
                 />
               </div>
             </section>
