@@ -53,7 +53,7 @@ export default function HomePage() {
     selectedScenarios: [],
     
     // Additional options
-    languageMode: 'pl',
+    languageMode: language === 'en' ? 'en' : 'pl',
     sendEmail: false,
     emailToSend: '',
     additionalNotes: ''
@@ -204,22 +204,25 @@ export default function HomePage() {
           onClick={() => setShowForm(false)}
           className="mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm text-zinc-100 rounded-lg hover:bg-white/30 transition-colors"
         >
-          ← Back to Introduction
+          ← {language === 'en' ? 'Back to Introduction' : 'Powrót do wprowadzenia'}
         </button>
 
         {/* Form Header */}
         <div className="mb-8 md:mb-10">
           <div className="inline-flex items-center gap-2 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs text-zinc-200 mb-3">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Interaktywny generator propozycji współpracy
+            {language === 'en' ? 'Interactive collaboration proposal generator' : 'Interaktywny generator propozycji współpracy'}
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-zinc-100">
-            Program współpracy – kreatywno-strategiczny partner <span className="text-brandAccent">Diasen</span>
+            {language === 'en'
+              ? 'Collaboration Program – Creative-Strategic Partner '
+              : 'Program współpracy – kreatywno-strategiczny partner '}
+            <span className="text-brandAccent">Diasen</span>
           </h1>
           <p className="mt-2 text-sm md:text-[15px] text-zinc-200 max-w-2xl">
-            Wypełnij kilka sekcji, a system automatycznie wygeneruje gotowy tekst oferty
-            oraz pobierze plik <span className="font-semibold">.txt</span>, który możesz od razu
-            dołączyć do maila lub prezentacji – bez ręcznego kopiowania.
+            {language === 'en'
+              ? 'Fill out a few sections and the system will automatically generate a ready proposal text and download a .txt file that you can immediately attach to an email or presentation.'
+              : 'Wypełnij kilka sekcji, a system automatycznie wygeneruje gotowy tekst oferty oraz pobierze plik .txt, który możesz od razu dołączyć do maila lub prezentacji – bez ręcznego kopiowania.'}
           </p>
         </div>
 
@@ -227,9 +230,13 @@ export default function HomePage() {
         <div className="rounded-3xl bg-black/40 backdrop-blur-md border border-white/20 shadow-2xl shadow-black/40">
           <div className="border-b border-white/20 px-5 md:px-8 py-4 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-zinc-300">Konfiguracja oferty</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-zinc-300">
+                {language === 'en' ? 'Offer Configuration' : 'Konfiguracja oferty'}
+              </p>
               <p className="text-sm text-zinc-200 mt-1">
-                Sekcje formularza odpowiadają elementom planu współpracy z Diasen.
+                {language === 'en'
+                  ? 'Form sections correspond to collaboration plan elements with Diasen.'
+                  : 'Sekcje formularza odpowiadają elementom planu współpracy z Diasen.'}
               </p>
             </div>
             <div className="flex items-center gap-3 text-xs text-zinc-300">
@@ -241,7 +248,7 @@ export default function HomePage() {
                   A
                 </div>
               </div>
-              <span>Ty + Diasen / wspólna wizja</span>
+              <span>{language === 'en' ? 'You + Diasen / shared vision' : 'Ty + Diasen / wspólna wizja'}</span>
             </div>
           </div>
 
@@ -251,7 +258,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="companyName" className="block text-xs font-semibold text-zinc-200">
-                    Nazwa firmy / marki *
+                    {language === 'en' ? 'Company / Brand name *' : 'Nazwa firmy / marki *'}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -267,7 +274,7 @@ export default function HomePage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="contactPerson" className="block text-xs font-semibold text-zinc-200">
-                    Osoba kontaktowa *
+                    {language === 'en' ? 'Contact person *' : 'Osoba kontaktowa *'}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -285,7 +292,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="contactRole" className="block text-xs font-semibold text-zinc-200">
-                    Stanowisko
+                    {language === 'en' ? 'Position / Role' : 'Stanowisko'}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -300,7 +307,7 @@ export default function HomePage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="contactEmail" className="block text-xs font-semibold text-zinc-200">
-                    E-mail *
+                    {language === 'en' ? 'Email *' : 'E-mail *'}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -1047,7 +1054,10 @@ export default function HomePage() {
             {/* CTA Button with Language Selector - Mobile Responsive */}
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mt-4 md:mt-8 w-full">
               <button
-                onClick={() => setShowForm(true)}
+                onClick={() => {
+                  setShowForm(true);
+                  setFormData(prev => ({ ...prev, languageMode: language === 'en' ? 'en' : 'pl' }));
+                }}
                 className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm md:text-base w-full md:w-auto text-center"
               >
                 {language === 'pl'
