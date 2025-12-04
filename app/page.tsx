@@ -123,34 +123,38 @@ export default function HomePage() {
       const doc = new jsPDF();
       
       // Add title with styling
-      doc.setFontSize(20);
+      doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Propozycja Współpracy - Diasen', 20, 30);
+      const title = language === 'pl' ? 'Propozycja Współpracy - Diasen' : 'Cooperation Proposal - Diasen';
+      doc.text(title, 20, 25);
       
       // Add subtitle
-      doc.setFontSize(14);
+      doc.setFontSize(11);
       doc.setFont('helvetica', 'normal');
-      doc.text('Creative Ambassador & Brand Storytelling Partner', 20, 45);
+      const subtitle = language === 'pl'
+        ? 'Kreatywny Ambasador i Partner ds. Storytelling Marki'
+        : 'Creative Ambassador & Brand Storytelling Partner';
+      doc.text(subtitle, 20, 35);
       
       // Add line separator
       doc.setLineWidth(0.5);
-      doc.line(20, 55, 190, 55);
+      doc.line(20, 45, 190, 45);
       
-      // Configure text formatting
-      doc.setFontSize(11);
+      // Configure text formatting with smaller font
+      doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       
-      // Split text into lines and add to PDF
-      const splitText = doc.splitTextToSize(text, 170);
-      let yPosition = 70;
+      // Split text into lines with proper width (155 for safe margins)
+      const splitText = doc.splitTextToSize(text, 155);
+      let yPosition = 55;
       
       splitText.forEach((line: string) => {
-        if (yPosition > 270) { // Add new page when needed
+        if (yPosition > 280) { // Add new page when needed
           doc.addPage();
-          yPosition = 20;
+          yPosition = 25;
         }
         doc.text(line, 20, yPosition);
-        yPosition += 6;
+        yPosition += 4.5;
       });
       
       // Save the PDF
@@ -211,8 +215,8 @@ export default function HomePage() {
             
             {/* Modal Content */}
             <div className="p-6 overflow-auto max-h-[calc(90vh-140px)]">
-              <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl px-6 py-4">
-                <div className="text-sm md:text-base leading-relaxed text-zinc-100 whitespace-pre-wrap font-['Inter'] tracking-wide">
+              <div className="bg-emerald-50/95 backdrop-blur-sm border border-emerald-200/40 rounded-2xl px-6 py-4">
+                <div className="text-sm md:text-base leading-relaxed text-emerald-900 whitespace-pre-wrap font-['Inter'] tracking-wide">
                   {response}
                 </div>
               </div>
@@ -1019,7 +1023,7 @@ export default function HomePage() {
               <p className="text-xs uppercase tracking-[0.18em] text-zinc-300 mb-2">
                 {language === 'pl' ? 'Podgląd wygenerowanego tekstu' : 'Generated text preview'}
               </p>
-              <div className="rounded-2xl bg-black/60 backdrop-blur-sm border border-white/20 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-zinc-100 whitespace-pre-wrap font-['Inter']">
+              <div className="rounded-2xl bg-emerald-50/95 backdrop-blur-sm border border-emerald-200/40 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-emerald-900 whitespace-pre-wrap font-['Inter']">
                 {response}
               </div>
             </div>

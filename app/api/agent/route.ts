@@ -114,7 +114,7 @@ async function generateCooperationProposal(data: FormData): Promise<string> {
   
   Use premium, calm, partnership tone with clear B2B language. If multiple areas are selected, combine them into a logical PROGRAM with modules.
   
-  ${data.languageMode === 'en' ? 'Write entirely in English.' : data.languageMode === 'pl' ? 'Write entirely in Polish.' : 'Write in Polish first, then add English translation separated by divider.'}
+  ${data.languageMode === 'en' ? 'IMPORTANT: Write the ENTIRE response in English only. Do not mix languages.' : data.languageMode === 'pl' ? 'IMPORTANT: Write the ENTIRE response in Polish only. Do not mix languages.' : 'Write in Polish first, then add English translation separated by divider.'}
   `;
 
   try {
@@ -186,8 +186,6 @@ ${lang === 'en' ? 'Date' : 'Data'}: ${new Date().toLocaleDateString(lang === 'en
 ${lang === 'en'
   ? `We propose establishing a strategic creative partnership with ${data.companyName}, focused on brand elevation and market presence enhancement.`
   : `Proponuję nawiązanie strategicznego partnerstwa kreatywnego z ${data.companyName}, skupionego na wzmocnieniu marki i obecności rynkowej.`}
-
-${lang === 'en' ? 'RECOMMENDED VARIANT' : 'REKOMENDOWANY WARIANT'}: ${variant}
 
 ${lang === 'en' ? 'RECOMMENDED VARIANT' : 'REKOMENDOWANY WARIANT'}: ${variant}
 
