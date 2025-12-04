@@ -155,7 +155,7 @@ export default function HomePage() {
             {/* Modal Content */}
             <div className="p-6 overflow-auto max-h-[calc(90vh-140px)]">
               <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl px-6 py-4">
-                <div className="text-xs md:text-sm leading-relaxed text-zinc-100 whitespace-pre-wrap font-mono">
+                <div className="text-sm md:text-base leading-relaxed text-zinc-100 whitespace-pre-wrap font-sans">
                   {response}
                 </div>
               </div>
@@ -340,7 +340,7 @@ export default function HomePage() {
               {/* A. Wizualna prezentacja marki */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  A. Wizualna prezentacja marki Diasen Polska
+                  {language === 'en' ? 'A. Visual Brand Presentation - Diasen Poland' : 'A. Wizualna prezentacja marki Diasen Polska'}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -352,12 +352,23 @@ export default function HomePage() {
                     'otwarci_wizualna_prezentacja'
                   ].map((area, index) => {
                     const labels = [
-                      'Ekskluzywne materiały marketingowe z realizacji (foto / wideo)',
-                      'Dokumentacja projektów w stylu editorial',
-                      'Kreacja kampanii wizerunkowych i treści do social media',
-                      'Tworzenie materiałów dla Diasen Polska',
-                      'Prezentacje produktów w realnych polskich projektach',
-                      'Jesteśmy otwarci na współpracę w tym obszarze'
+                      language === 'en'
+                        ? [
+                          'Exclusive marketing materials from realizations (photo / video)',
+                          'Editorial-style project documentation',
+                          'Image campaigns and social media content creation',
+                          'Creating materials for Diasen Poland',
+                          'Product presentations in real Polish projects',
+                          'We are open to cooperation in this area'
+                        ]
+                        : [
+                          'Ekskluzywne materiały marketingowe z realizacji (foto / wideo)',
+                          'Dokumentacja projektów w stylu editorial',
+                          'Kreacja kampanii wizerunkowych i treści do social media',
+                          'Tworzenie materiałów dla Diasen Polska',
+                          'Prezentacje produktów w realnych polskich projektach',
+                          'Jesteśmy otwarci na współpracę w tym obszarze'
+                        ]
                     ];
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
@@ -379,7 +390,7 @@ export default function HomePage() {
               {/* B. Ambasadorskie działania kreatywne */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  B. Ambasadorskie działania kreatywne
+                  {language === 'en' ? 'B. Ambassador Creative Activities' : 'B. Ambasadorskie działania kreatywne'}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -391,12 +402,23 @@ export default function HomePage() {
                     'otwarci_ambasadorskie'
                   ].map((area, index) => {
                     const labels = [
-                      'Rola Ambasadora Marki Diasen Polska',
-                      'Niezależna kreacja materiałów marketingowych',
-                      'Współpraca z działem marketingu Diasen Polska',
-                      'Budowanie narracji wizualnej (brand storytelling)',
-                      'Kampanie łączące technologię Diasen z moimi projektami',
-                      'Jesteśmy otwarci'
+                      language === 'en'
+                        ? [
+                          'Diasen Poland Brand Ambassador Role',
+                          'Independent marketing materials creation',
+                          'Collaboration with Diasen Poland marketing department',
+                          'Visual narrative building (brand storytelling)',
+                          'Campaigns linking Diasen technology with projects',
+                          'We are open'
+                        ]
+                        : [
+                          'Rola Ambasadora Marki Diasen Polska',
+                          'Niezależna kreacja materiałów marketingowych',
+                          'Współpraca z działem marketingu Diasen Polska',
+                          'Budowanie narracji wizualnej (brand storytelling)',
+                          'Kampanie łączące technologię Diasen z moimi projektami',
+                          'Jesteśmy otwarci'
+                        ]
                     ];
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
@@ -418,7 +440,7 @@ export default function HomePage() {
               {/* C. Murale i realizacje artystyczne */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  C. Murale i realizacje artystyczne
+                  {language === 'en' ? 'C. Murals and Artistic Realizations' : 'C. Murale i realizacje artystyczne'}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -429,11 +451,21 @@ export default function HomePage() {
                     'otwarci_murale'
                   ].map((area, index) => {
                     const labels = [
-                      'Ekskluzywne murale wewnętrzne',
-                      'Ekskluzywne murale elewacyjne',
-                      'Murale na expo, targach i wydarzeniach',
-                      'Unikalne ekspozycje w przestrzeni publicznej',
-                      'Jesteśmy otwarci'
+                      language === 'en'
+                        ? [
+                          'Exclusive interior murals',
+                          'Exclusive facade murals',
+                          'Murals at expos, fairs and events',
+                          'Unique expositions in public spaces',
+                          'We are open'
+                        ]
+                        : [
+                          'Ekskluzywne murale wewnętrzne',
+                          'Ekskluzywne murale elewacyjne',
+                          'Murale na expo, targach i wydarzeniach',
+                          'Unikalne ekspozycje w przestrzeni publicznej',
+                          'Jesteśmy otwarci'
+                        ]
                     ];
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
@@ -455,7 +487,7 @@ export default function HomePage() {
               {/* D. Działania ekspozycyjne, eventowe i edukacyjne */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  D. Działania ekspozycyjne, eventowe i edukacyjne
+                  {language === 'en' ? 'D. Exhibition, Event and Educational Activities' : 'D. Działania ekspozycyjne, eventowe i edukacyjne'}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -467,12 +499,23 @@ export default function HomePage() {
                     'otwarci_ekspozycyjne'
                   ].map((area, index) => {
                     const labels = [
-                      'Udział w polskich targach, expo i showroomach',
-                      'Instalacje wizualne na wydarzenia branżowe',
-                      'Szkolenia dla architektów, wykonawców i deweloperów',
-                      'Webinary / live\'y dla odbiorców w Polsce',
-                      'Eventy tematyczne z udziałem twórców',
-                      'Jesteśmy otwarci'
+                      language === 'en'
+                        ? [
+                          'Participation in Polish fairs, expos and showrooms',
+                          'Visual installations for industry events',
+                          'Training for architects, contractors and developers',
+                          'Webinars / lives for recipients in Poland',
+                          'Thematic events with creators participation',
+                          'We are open'
+                        ]
+                        : [
+                          'Udział w polskich targach, expo i showroomach',
+                          'Instalacje wizualne na wydarzenia branżowe',
+                          'Szkolenia dla architektów, wykonawców i deweloperów',
+                          'Webinary / live\'y dla odbiorców w Polsce',
+                          'Eventy tematyczne z udziałem twórców',
+                          'Jesteśmy otwarci'
+                        ]
                     ];
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
@@ -494,7 +537,7 @@ export default function HomePage() {
               {/* E. Rozszerzona współpraca biznesowa */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  E. Rozszerzona współpraca biznesowa
+                  {language === 'en' ? 'E. Extended Business Cooperation' : 'E. Rozszerzona współpraca biznesowa'}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -506,12 +549,23 @@ export default function HomePage() {
                     'otwarci_biznesowa'
                   ].map((area, index) => {
                     const labels = [
-                      'Współpraca jako niezależny partner',
-                      'Stała współpraca jako konsultant kreatywny',
-                      'Kampanie kwartalne / półroczne',
-                      'Prezentacje produktów Diasen u deweloperów',
-                      'Doradztwo kreatywne dla klientów',
-                      'Jesteśmy otwarci'
+                      language === 'en'
+                        ? [
+                          'Cooperation as independent partner',
+                          'Permanent cooperation as creative consultant',
+                          'Quarterly / semi-annual campaigns',
+                          'Diasen product presentations at developers',
+                          'Creative consulting for clients',
+                          'We are open'
+                        ]
+                        : [
+                          'Współpraca jako niezależny partner',
+                          'Stała współpraca jako konsultant kreatywny',
+                          'Kampanie kwartalne / półroczne',
+                          'Prezentacje produktów Diasen u deweloperów',
+                          'Doradztwo kreatywne dla klientów',
+                          'Jesteśmy otwarci'
+                        ]
                     ];
                     return (
                       <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
