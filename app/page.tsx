@@ -1046,7 +1046,7 @@ export default function HomePage() {
                 </div>
                 <select
                   value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
+                  onChange={(e) => setLanguage(e.target.value as 'en' | 'pl')}
                   className="bg-transparent text-black text-sm font-medium focus:outline-none cursor-pointer"
                 >
                   <option value="en" className="bg-white text-black">English</option>
