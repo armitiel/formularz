@@ -3,42 +3,64 @@
 import { useState } from 'react';
 
 interface FormData {
-  yourName: string;
+  // Section 1: Company Data
   companyName: string;
+  contactPerson: string;
+  contactRole: string;
   contactEmail: string;
-  roleTitle: string;
-  activities: string[];
-  diasenTime: string;
-  presenceForm: string;
-  monthlyMin: string;
-  monthlyMax: string;
-  refundMechanism: string;
-  refundType: string;
-  metrics: string;
-  goals: string;
+  
+  // Section 2: Modules of collaboration
+  modules: string[];
+  
+  // Section 3: Goals
+  goals: string[];
+  goalsDetails: string;
+  
+  // Section 4: Intensity & Budget
+  intensity: number;
+  budgetMin: string;
+  budgetMax: string;
+  
+  // Section 5: Markets
   markets: string[];
-  extraNotes: string;
+  marketsDetails: string;
+  
+  // Section 6: Language & Email
+  languageMode: string;
+  sendEmail: boolean;
+  emailToSend: string;
 }
 
 export default function HomePage() {
   const [showForm, setShowForm] = useState(false);
   const [language, setLanguage] = useState('en');
   const [formData, setFormData] = useState<FormData>({
-    yourName: '',
-    companyName: 'Diasen',
+    // Section 1: Company Data
+    companyName: '',
+    contactPerson: '',
+    contactRole: '',
     contactEmail: '',
-    roleTitle: '',
-    activities: ['realizacje_wlasne', 'promocja_diasen'],
-    diasenTime: '40',
-    presenceForm: '',
-    monthlyMin: '',
-    monthlyMax: '',
-    refundMechanism: 'tak',
-    refundType: 'dodatkowa_praca',
-    metrics: '',
-    goals: '',
+    
+    // Section 2: Modules
+    modules: [],
+    
+    // Section 3: Goals
+    goals: [],
+    goalsDetails: '',
+    
+    // Section 4: Intensity & Budget
+    intensity: 50,
+    budgetMin: '',
+    budgetMax: '',
+    
+    // Section 5: Markets
     markets: ['Polska'],
-    extraNotes: ''
+    marketsDetails: '',
+    
+    // Section 6: Language & Email
+    languageMode: 'pl',
+    sendEmail: false,
+    emailToSend: ''
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -541,60 +563,55 @@ export default function HomePage() {
         }}
       >
         <div className="w-full max-w-[1920px] h-screen relative mx-auto">
-          {/* Language Selector - Top Right */}
-          <div className="absolute top-8 right-8 z-10">
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
-              <div className="flex -space-x-2">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-customStone to-zinc-400 border border-white/30 flex items-center justify-center text-[10px] font-semibold text-white">
-                  D
-                </div>
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-white/30 flex items-center justify-center text-[10px] font-semibold text-black">
-                  A
-                </div>
-              </div>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="bg-transparent text-white text-sm font-medium focus:outline-none cursor-pointer"
-              >
-                <option value="en" className="bg-black text-white">English</option>
-                <option value="pl" className="bg-black text-white">Polski</option>
-                <option value="ar" className="bg-black text-white">العربية</option>
-              </select>
-            </div>
-          </div>
-
           {/* Main Content - Left Column Only */}
           <div className="absolute left-[254px] top-[136px] w-[620px] inline-flex flex-col justify-start items-start gap-8">
             <div className="self-stretch justify-start">
-              <span className="text-white text-4xl font-bold font-['Arial'] leading-[48px] drop-shadow-lg">
-                {language === 'pl' ? 'Propozycja: ' : language === 'ar' ? 'اقتراح: ' : 'Proposal: '}
+              <span className="text-black text-4xl font-bold font-['Arial'] leading-[48px]">
+                {language === 'pl' ? 'Propozycja: ' : 'Proposal: '}
               </span>
-              <span className="text-white text-4xl font-normal font-['Arial'] leading-[48px] drop-shadow-lg">
+              <span className="text-black text-4xl font-normal font-['Arial'] leading-[48px]">
                 {language === 'pl'
                   ? 'Ambasador Kreatywny i Partner ds. Storytelling Marki dla Diasen'
-                  : language === 'ar'
-                  ? 'سفير إبداعي وشريك سرد العلامة التجارية لـ Diasen'
                   : 'Creative Ambassador & Brand Storytelling Partner for Diasen'}
               </span>
             </div>
-            <div className="self-stretch justify-start text-white text-lg font-normal font-['Inter'] leading-7 drop-shadow-md">
+            <div className="self-stretch justify-start text-gray-800 text-lg font-normal font-['Inter'] leading-7">
               {language === 'pl'
                 ? 'Jako ambasador kreatywny Diasen, moja rola skupia się na wizualnym wzbogaceniu, storytelling marki i aplikacjach artystycznych. Cel: dodanie prestiżu, widoczności i głębi narracyjnej do obecności Diasen w kontekstach zorientowanych na design, od architektury do sztuki, od mediów społecznościowych po instalacje w rzeczywistości.'
-                : language === 'ar'
-                ? 'كسفير إبداعي لـ Diasen، يركز دوري على الارتقاء البصري وسرد العلامة التجارية والتطبيقات الفنية. الهدف: إضافة الهيبة والرؤية وعمق السرد لحضور Diasen في السياقات الموجهة للتصميم، من الهندسة المعمارية إلى الفن، ومن وسائل التواصل الاجتماعي إلى التركيبات الواقعية.'
                 : 'As a creative ambassador for Diasen, my role focuses on visual elevation, brand storytelling, and artistic application. The goal: to add prestige, visibility, and narrative depth to Diasen\'s presence in design-forward contexts, from architecture to art, from social media to real-life installations.'}
             </div>
-            <button
-              onClick={() => setShowForm(true)}
-              className="mt-8 px-8 py-4 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              {language === 'pl'
-                ? 'Rozpocznij Formularz Współpracy'
-                : language === 'ar'
-                ? 'ابدأ نموذج التعاون'
-                : 'Start Collaboration Form'}
-            </button>
+            
+            {/* CTA Button with Language Selector */}
+            <div className="flex items-center gap-4 mt-8">
+              <button
+                onClick={() => setShowForm(true)}
+                className="px-8 py-4 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                {language === 'pl'
+                  ? 'Rozpocznij Formularz Współpracy'
+                  : 'Start Collaboration Form'}
+              </button>
+              
+              {/* Language Selector next to CTA */}
+              <div className="flex items-center gap-3 bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3 border border-black/20">
+                <div className="flex -space-x-2">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-customStone to-zinc-400 border border-black/30 flex items-center justify-center text-[10px] font-semibold text-white">
+                    D
+                  </div>
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-black/30 flex items-center justify-center text-[10px] font-semibold text-black">
+                    A
+                  </div>
+                </div>
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="bg-transparent text-black text-sm font-medium focus:outline-none cursor-pointer"
+                >
+                  <option value="en" className="bg-white text-black">English</option>
+                  <option value="pl" className="bg-white text-black">Polski</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
