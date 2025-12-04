@@ -22,6 +22,7 @@ interface FormData {
 
 export default function HomePage() {
   const [showForm, setShowForm] = useState(false);
+  const [language, setLanguage] = useState('en');
   const [formData, setFormData] = useState<FormData>({
     yourName: '',
     companyName: 'Diasen',
@@ -532,7 +533,7 @@ export default function HomePage() {
     ) : (
       // Intro Page with living5 background
       <div
-        className="min-h-screen bg-customStone/25 overflow-hidden"
+        className="min-h-screen overflow-hidden"
         style={{
           backgroundImage: 'url(/living5.png)',
           backgroundSize: 'cover',
@@ -540,40 +541,60 @@ export default function HomePage() {
         }}
       >
         <div className="w-full max-w-[1920px] h-screen relative mx-auto">
-          {/* Main Content */}
+          {/* Language Selector - Top Right */}
+          <div className="absolute top-8 right-8 z-10">
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
+              <div className="flex -space-x-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-customStone to-zinc-400 border border-white/30 flex items-center justify-center text-[10px] font-semibold text-white">
+                  D
+                </div>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-white/30 flex items-center justify-center text-[10px] font-semibold text-black">
+                  A
+                </div>
+              </div>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="bg-transparent text-white text-sm font-medium focus:outline-none cursor-pointer"
+              >
+                <option value="en" className="bg-black text-white">English</option>
+                <option value="pl" className="bg-black text-white">Polski</option>
+                <option value="ar" className="bg-black text-white">العربية</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Main Content - Left Column Only */}
           <div className="absolute left-[254px] top-[136px] w-[620px] inline-flex flex-col justify-start items-start gap-8">
             <div className="self-stretch justify-start">
-              <span className="text-zinc-100 text-4xl font-bold font-['Arial'] leading-[48px]">Proposal: </span>
-              <span className="text-zinc-100 text-4xl font-normal font-['Arial'] leading-[48px]">Creative Ambassador & Brand Storytelling Partner for Diasen</span>
+              <span className="text-white text-4xl font-bold font-['Arial'] leading-[48px] drop-shadow-lg">
+                {language === 'pl' ? 'Propozycja: ' : language === 'ar' ? 'اقتراح: ' : 'Proposal: '}
+              </span>
+              <span className="text-white text-4xl font-normal font-['Arial'] leading-[48px] drop-shadow-lg">
+                {language === 'pl'
+                  ? 'Ambasador Kreatywny i Partner ds. Storytelling Marki dla Diasen'
+                  : language === 'ar'
+                  ? 'سفير إبداعي وشريك سرد العلامة التجارية لـ Diasen'
+                  : 'Creative Ambassador & Brand Storytelling Partner for Diasen'}
+              </span>
             </div>
-            <div className="self-stretch justify-start text-zinc-100 text-lg font-normal font-['Inter'] leading-7">
-              As a creative ambassador for Diasen, my role focuses on visual elevation, brand storytelling, and artistic application.<br/>
-              The goal: to add prestige, visibility, and narrative depth to Diasen's presence in design-forward contexts, from architecture to art,
-              from social media to real-life installations.
+            <div className="self-stretch justify-start text-white text-lg font-normal font-['Inter'] leading-7 drop-shadow-md">
+              {language === 'pl'
+                ? 'Jako ambasador kreatywny Diasen, moja rola skupia się na wizualnym wzbogaceniu, storytelling marki i aplikacjach artystycznych. Cel: dodanie prestiżu, widoczności i głębi narracyjnej do obecności Diasen w kontekstach zorientowanych na design, od architektury do sztuki, od mediów społecznościowych po instalacje w rzeczywistości.'
+                : language === 'ar'
+                ? 'كسفير إبداعي لـ Diasen، يركز دوري على الارتقاء البصري وسرد العلامة التجارية والتطبيقات الفنية. الهدف: إضافة الهيبة والرؤية وعمق السرد لحضور Diasen في السياقات الموجهة للتصميم، من الهندسة المعمارية إلى الفن، ومن وسائل التواصل الاجتماعي إلى التركيبات الواقعية.'
+                : 'As a creative ambassador for Diasen, my role focuses on visual elevation, brand storytelling, and artistic application. The goal: to add prestige, visibility, and narrative depth to Diasen\'s presence in design-forward contexts, from architecture to art, from social media to real-life installations.'}
             </div>
             <button
               onClick={() => setShowForm(true)}
-              className="mt-8 px-8 py-4 bg-brandAccent text-black font-semibold rounded-xl hover:bg-yellow-400 transition-colors"
+              className="mt-8 px-8 py-4 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              Start Collaboration Form
+              {language === 'pl'
+                ? 'Rozpocznij Formularz Współpracy'
+                : language === 'ar'
+                ? 'ابدأ نموذج التعاون'
+                : 'Start Collaboration Form'}
             </button>
-          </div>
-
-          {/* Right Column Content */}
-          <div className="absolute left-[1008px] top-[191px] justify-start">
-            <span className="text-zinc-100 text-3xl font-normal font-['Inter'] leading-10">Key Pillars of the Collaboration<br/></span>
-            <span className="text-zinc-100 text-lg font-extrabold font-['Inter'] leading-7">1. Creative Agency Role<br/></span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7">I act as a creative agency and visual strategist, bringing:<br/></span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7">Unique art direction and campaign concepts<br/>Tailored content for use in digital and print promotions<br/>Immersive stories that highlight both aesthetic and material value<br/></span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7">This includes:<br/></span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7">Designing visual worlds around Diasen products<br/>Providing content for advertising, PR, and social media<br/>Connecting materials to architectural and emotional narratives</span>
-          </div>
-
-          <div className="w-[599px] absolute left-[1008px] top-[598px] justify-start">
-            <span className="text-zinc-100 text-lg font-extrabold font-['Inter'] leading-7">2. Artistic Integration & Applications</span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7"><br/>I propose to integrate products like Decork Mediterraneo into:<br/></span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7">Signature facades for villas and public spaces<br/>Artistic wall compositions for high-end interiors<br/></span>
-            <span className="text-zinc-100 text-lg font-normal font-['Inter'] leading-7">This approach turns buildings into living canvases, where Diasen's material technology meets storytelling-driven design.</span>
           </div>
         </div>
       </div>
