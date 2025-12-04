@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Program współpracy – Diasen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: "#0f172a",
+            brandAccent: "#eab308"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100">
+  <div class="max-w-5xl mx-auto px-4 py-10 md:py-14">
+    <!-- Header card -->
+    <div class="mb-8 md:mb-10">
+      <div class="inline-flex items-center gap-2 rounded-full bg-slate-800/70 border border-slate-700 px-3 py-1 text-xs text-slate-300 mb-3">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Interaktywny generator propozycji współpracy
+      </div>
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight text-slate-50">
+        Program współpracy – kreatywno-strategiczny partner <span class="text-brandAccent">Diasen</span>
+      </h1>
+      <p class="mt-2 text-sm md:text-[15px] text-slate-300 max-w-2xl">
+        Wypełnij kilka sekcji, a system automatycznie wygeneruje gotowy tekst oferty
+        oraz pobierze plik <span class="font-semibold">.txt</span>, który możesz od razu
+        dołączyć do maila lub prezentacji – bez ręcznego kopiowania.
+      </p>
+    </div>
+
+    <!-- Main card -->
+    <div class="rounded-3xl bg-slate-900/70 border border-slate-800 shadow-2xl shadow-black/40 backdrop-blur-md">
+      <div class="border-b border-slate-800 px-5 md:px-8 py-4 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <p class="text-xs uppercase tracking-[0.22em] text-slate-500">Konfiguracja oferty</p>
+          <p class="text-sm text-slate-300 mt-1">
+            Sekcje formularza odpowiadają elementom planu współpracy z Diasen.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 text-xs text-slate-400">
+          <div class="flex -space-x-2">
+            <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-600 to-slate-400 border border-slate-900 flex items-center justify-center text-[10px] font-semibold">
+              D
+            </div>
+            <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 border border-slate-900 flex items-center justify-center text-[10px] font-semibold">
+              A
+            </div>
+          </div>
+          <span>Ty + Diasen / wspólna wizja</span>
+        </div>
+      </div>
+
+      <form id="cooperationForm" class="px-5 md:px-8 py-6 md:py-8 space-y-8 text-sm md:text-[15px]">
+        <!-- SEKCJA 1 – Podstawowe informacje -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-semibold text-slate-100">1. Podstawowe informacje</h2>
+              <p class="text-xs text-slate-400 mt-1">
+                Dane, które pojawią się w nagłówku propozycji współpracy.
+              </p>
+            </div>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+              krok 1/4
+            </span>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label for="yourName" class="block text-xs font-semibold text-slate-300">
+                Twoje imię / marka
+              </label>
+              <input
+                class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
+                type="text" id="yourName" name="yourName"
+                placeholder="np. Amitiel Angelisme / Raster" required />
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="companyName" class="block text-xs font-semibold text-slate-300">
+                Firma / klient
+              </label>
+              <input
+                class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
+                type="text" id="companyName" name="companyName" value="Diasen" />
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label for="contactEmail" class="block text-xs font-semibold text-slate-300">
+                E-mail kontaktowy
+              </label>
+              <input
+                class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
+                type="email" id="contactEmail" name="contactEmail"
+                placeholder="np. kontakt@twojadomena.com" />
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="roleTitle" class="block text-xs font-semibold text-slate-300">
+                Nazwa roli (opcjonalnie)
+              </label>
+              <input
+                class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
+                type="text" id="roleTitle" name="roleTitle"
+                placeholder="np. Strategic Creative Partner" />
+            </div>
+          </div>
+        </section>
+
+        <!-- SEKCJA 2 – Model „dwóch nóg” -->
+        <section class="space-y-4 border-t border-slate-800 pt-6">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-semibold text-slate-100">2. Model pracy – dwie nogi</h2>
+              <p class="text-xs text-slate-400 mt-1">
+                Jak dzielisz się między własne realizacje a działania dla Diasen.
+              </p>
+            </div>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+              krok 2/4
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs font-semibold text-slate-300">Twoja główna aktywność</p>
+            <div class="flex flex-wrap gap-2">
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/70 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="activities" value="realizacje_wlasne" checked
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>własne realizacje / projekty</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/70 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="activities" value="promocja_diasen" checked
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>promocja i rozwój marki Diasen</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/70 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="activities" value="murale"
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>murale / projekty fizyczne</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/70 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="activities" value="strategia"
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>strategia & doradztwo</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="diasenTime" class="block text-xs font-semibold text-slate-300">
+              Szacunkowy udział czasu dedykowany Diasen
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                class="w-full accent-amber-400"
+                type="range" id="diasenTime" name="diasenTime" min="10" max="100" step="5" value="40" />
+              <span id="diasenTimeLabel" class="text-xs font-semibold text-amber-300 w-10 text-right">
+                40%
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="presenceForm" class="block text-xs font-semibold text-slate-300">
+              W jakiej formie możesz być „na ich podwórku”? (krótki opis)
+            </label>
+            <textarea
+              id="presenceForm" name="presenceForm"
+              class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[80px]"
+              placeholder="np. hybrydowo: praca zdalna + okresowe wyjazdy do Polski na kluczowe realizacje, sesje materiałowe i spotkania z zespołem."></textarea>
+          </div>
+        </section>
+
+        <!-- SEKCJA 3 – Finanse & bezpieczeństwo -->
+        <section class="space-y-4 border-t border-slate-800 pt-6">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-semibold text-slate-100">3. Model finansowy i bezpieczeństwo</h2>
+              <p class="text-xs text-slate-400 mt-1">
+                Jak wyglądają widełki, rozliczenie i „bezpieczna” konstrukcja dla Diasen.
+              </p>
+            </div>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+              krok 3/4
+            </span>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label for="monthlyMin" class="block text-xs font-semibold text-slate-300">
+                Szacowany budżet miesięczny – minimum (€)
+              </label>
+              <input
+                class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
+                type="number" id="monthlyMin" name="monthlyMin" placeholder="np. 5000" />
+            </div>
+            <div class="space-y-1.5">
+              <label for="monthlyMax" class="block text-xs font-semibold text-slate-300">
+                Szacowany budżet miesięczny – maksimum (€)
+              </label>
+              <input
+                class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
+                type="number" id="monthlyMax" name="monthlyMax" placeholder="np. 8000" />
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs font-semibold text-slate-300">
+              Czy chcesz zaproponować mechanizm bezpieczeństwa / zwrotu?
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200">
+                <input type="radio" name="refundMechanism" value="tak" checked
+                       class="border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>Tak – chcę to podkreślić</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-400">
+                <input type="radio" name="refundMechanism" value="nie"
+                       class="border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>Nie – standardowe rozliczenie etapami</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="refundType" class="block text-xs font-semibold text-slate-300">
+              Forma „bezpieczeństwa” dla klienta
+            </label>
+            <select
+              id="refundType" name="refundType"
+              class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80">
+              <option value="dodatkowa_praca">
+                Dodatkowa praca / poprawki bez dodatkowych kosztów
+              </option>
+              <option value="czesciowy_zwrot">
+                Częściowy zwrot vs ustalone KPI / przesunięcie budżetu
+              </option>
+              <option value="kamienie_milowe">
+                Rozliczanie kamieniami milowymi (płatność po akceptacji)
+              </option>
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="metrics" class="block text-xs font-semibold text-slate-300">
+              Jakie wskaźniki chcesz zaproponować jako mierniki efektu?
+            </label>
+            <textarea
+              id="metrics" name="metrics"
+              class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[80px]"
+              placeholder="np. ilość zapytań od architektów, zaangażowanie w social media, liczba referencyjnych realizacji z użyciem Diasen, liczba publikacji PR itp."></textarea>
+          </div>
+        </section>
+
+        <!-- SEKCJA 4 – Cele i kontekst -->
+        <section class="space-y-4 border-t border-slate-800 pt-6">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-semibold text-slate-100">4. Cele współpracy i kontekst</h2>
+              <p class="text-xs text-slate-400 mt-1">
+                Co chcesz im komunikować jako sens całego modelu.
+              </p>
+            </div>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+              krok 4/4
+            </span>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="goals" class="block text-xs font-semibold text-slate-300">
+              Główne cele twojej współpracy z Diasen
+            </label>
+            <textarea
+              id="goals" name="goals"
+              class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[90px]"
+              placeholder="np. podniesienie postrzegania marki Diasen wśród architektów jako partnera premium, stworzenie biblioteki materiałów editorial, zbudowanie narracji łączącej technologię, zdrowy mikroklimat i design."></textarea>
+          </div>
+
+          <div class="space-y-1.5">
+            <p class="text-xs font-semibold text-slate-300">Główne rynki / obszary działania</p>
+            <div class="flex flex-wrap gap-2">
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/80 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="markets" value="Polska" checked
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>Polska</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/80 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="markets" value="Europa"
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>Europa</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/80 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="markets" value="Bliski Wschód"
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>Bliski Wschód</span>
+              </label>
+              <label class="inline-flex items-center gap-2 text-xs text-slate-200 bg-slate-800/80 border border-slate-700 rounded-full px-3 py-1 cursor-pointer">
+                <input type="checkbox" name="markets" value="Inne"
+                       class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400">
+                <span>Inne (do doprecyzowania)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="extraNotes" class="block text-xs font-semibold text-slate-300">
+              Dodatkowe uwagi / kontekst
+            </label>
+            <textarea
+              id="extraNotes" name="extraNotes"
+              class="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[70px]"
+              placeholder="np. odniesienie do prezentacji, którą już widzieli; pomysł na pilotażową kampanię lub mural referencyjny; sposób włączenia twoich dotychczasowych realizacji."></textarea>
+          </div>
+        </section>
+
+        <!-- Actions -->
+        <div class="border-t border-slate-800 pt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div class="text-[11px] text-slate-400 flex items-center gap-2">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-800 border border-slate-700 text-[10px] text-slate-300">
+              i
+            </span>
+            <span>
+              Po kliknięciu wygeneruję tekst oferty, pokażę podgląd i automatycznie pobiorę plik <span class="text-slate-200 font-medium">.txt</span>.
+            </span>
+          </div>
+          <button
+            type="submit"
+            id="submitBtn"
+            class="inline-flex items-center justify-center rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 px-5 py-2.5 text-xs md:text-sm font-semibold text-slate-900 shadow-lg shadow-amber-500/40 hover:shadow-amber-500/60 hover:-translate-y-0.5 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 focus:ring-offset-slate-900 disabled:opacity-60 disabled:hover:translate-y-0">
+            <span class="mr-1.5">Wygeneruj podsumowanie oferty</span>
+            <span class="text-lg leading-none">↗</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Response box -->
+      <div id="response" class="border-t border-slate-800 px-5 md:px-8 py-4 md:py-5 hidden">
+        <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">Podgląd wygenerowanego tekstu</p>
+        <div class="rounded-2xl bg-slate-950/60 border border-slate-800 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-slate-100 whitespace-pre-wrap font-mono">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const diasenTimeInput = document.getElementById('diasenTime');
+    const diasenTimeLabel = document.getElementById('diasenTimeLabel');
+    const form = document.getElementById('cooperationForm');
+    const responseWrapper = document.getElementById('response');
+    const responseBox = responseWrapper.querySelector('div');
+    const submitBtn = document.getElementById('submitBtn');
+
+    diasenTimeInput.addEventListener('input', () => {
+      diasenTimeLabel.textContent = diasenTimeInput.value + '%';
+    });
+
+    function downloadSummaryFile(text, filename = 'propozycja-wspolpracy-diasen.txt') {
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      URL.revokeObjectURL(url);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Generuję podsumowanie...';
+
+      const formData = new FormData(form);
+      const activities = formData.getAll('activities');
+      const markets = formData.getAll('markets');
+
+      const payload = {
+        yourName: formData.get('yourName') || '',
+        companyName: formData.get('companyName') || '',
+        contactEmail: formData.get('contactEmail') || '',
+        roleTitle: formData.get('roleTitle') || '',
+        activities,
+        diasenTime: formData.get('diasenTime') || '',
+        presenceForm: formData.get('presenceForm') || '',
+        monthlyMin: formData.get('monthlyMin') || '',
+        monthlyMax: formData.get('monthlyMax') || '',
+        refundMechanism: formData.get('refundMechanism') || 'tak',
+        refundType: formData.get('refundType') || '',
+        metrics: formData.get('metrics') || '',
+        goals: formData.get('goals') || '',
+        markets,
+        extraNotes: formData.get('extraNotes') || ''
+      };
+
+      try {
+        const res = await fetch('/api/agent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        const summary = data.summary || 'Brak odpowiedzi z backendu.';
+
+        // Podgląd
+        responseWrapper.classList.remove('hidden');
+        responseBox.textContent = summary;
+
+        // Auto-download pliku
+        downloadSummaryFile(summary);
+      } catch (err) {
+        responseWrapper.classList.remove('hidden');
+        responseBox.textContent = 'Wystąpił błąd połączenia z backendem.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Wygeneruj podsumowanie oferty';
+      }
+    });
+  </script>
+</body>
+</html>
