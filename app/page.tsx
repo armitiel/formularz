@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { translations, Translation } from './translations';
 
 interface FormData {
   // Basic company info
@@ -31,7 +32,8 @@ interface FormData {
 
 export default function HomePage() {
   const [showForm, setShowForm] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState<'en' | 'pl'>('en');
+  const t: Translation = translations[language];
   const [formData, setFormData] = useState<FormData>({
     // Basic company info
     companyName: '',
@@ -141,8 +143,8 @@ export default function HomePage() {
             {/* Modal Header */}
             <div className="border-b border-white/20 px-6 py-4 flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-zinc-100">Finalna Hybryda - Propozycja Współpracy</h3>
-                <p className="text-xs text-zinc-300 mt-1">Wygenerowana propozycja została automatycznie pobrana jako plik .txt</p>
+                <h3 className="text-lg font-semibold text-zinc-100">{t.modalTitle}</h3>
+                <p className="text-xs text-zinc-300 mt-1">{t.modalSubtitle}</p>
               </div>
               <button
                 onClick={() => setShowModal(false)}
@@ -155,7 +157,7 @@ export default function HomePage() {
             {/* Modal Content */}
             <div className="p-6 overflow-auto max-h-[calc(90vh-140px)]">
               <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl px-6 py-4">
-                <div className="text-sm md:text-base leading-relaxed text-zinc-100 whitespace-pre-wrap font-sans">
+                <div className="text-sm md:text-base leading-relaxed text-zinc-100 whitespace-pre-wrap font-['Inter'] tracking-wide">
                   {response}
                 </div>
               </div>
@@ -166,20 +168,20 @@ export default function HomePage() {
                   <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/20 border border-emerald-400/30">
                     ✓
                   </span>
-                  <span>Propozycja została automatycznie pobrana jako plik tekstowy</span>
+                  <span>{t.downloadConfirmation}</span>
                 </div>
                 <div className="flex gap-3">
                   <button
                     onClick={() => downloadFile(response)}
                     className="px-4 py-2 bg-white/10 hover:bg-white/20 text-zinc-200 hover:text-zinc-100 text-sm rounded-xl transition-colors border border-white/20"
                   >
-                    Pobierz ponownie
+                    {t.downloadAgain}
                   </button>
                   <button
                     onClick={() => setShowModal(false)}
                     className="px-6 py-2 bg-gradient-to-tr from-amber-500 to-yellow-300 text-black font-semibold rounded-xl hover:from-amber-600 hover:to-yellow-400 transition-all duration-200 text-sm"
                   >
-                    Zamknij
+                    {t.close}
                   </button>
                 </div>
               </div>
@@ -204,25 +206,21 @@ export default function HomePage() {
           onClick={() => setShowForm(false)}
           className="mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm text-zinc-100 rounded-lg hover:bg-white/30 transition-colors"
         >
-          ← {language === 'en' ? 'Back to Introduction' : 'Powrót do wprowadzenia'}
+          ← {t.backToIntro}
         </button>
 
         {/* Form Header */}
         <div className="mb-8 md:mb-10">
           <div className="inline-flex items-center gap-2 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs text-zinc-200 mb-3">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            {language === 'en' ? 'Interactive collaboration proposal generator' : 'Interaktywny generator propozycji współpracy'}
+            {t.interactiveGenerator}
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-zinc-100">
-            {language === 'en'
-              ? 'Collaboration Program – Creative-Strategic Partner '
-              : 'Program współpracy – kreatywno-strategiczny partner '}
+            {t.collaborationProgram} {' '}
             <span className="text-brandAccent">Diasen</span>
           </h1>
           <p className="mt-2 text-sm md:text-[15px] text-zinc-200 max-w-2xl">
-            {language === 'en'
-              ? 'Fill out a few sections and the system will automatically generate a ready proposal text and download a .txt file that you can immediately attach to an email or presentation.'
-              : 'Wypełnij kilka sekcji, a system automatycznie wygeneruje gotowy tekst oferty oraz pobierze plik .txt, który możesz od razu dołączyć do maila lub prezentacji – bez ręcznego kopiowania.'}
+            {t.fillSectionsDescription}
           </p>
         </div>
 
@@ -231,12 +229,10 @@ export default function HomePage() {
           <div className="border-b border-white/20 px-5 md:px-8 py-4 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-zinc-300">
-                {language === 'en' ? 'Offer Configuration' : 'Konfiguracja oferty'}
+                {t.offerConfiguration}
               </p>
               <p className="text-sm text-zinc-200 mt-1">
-                {language === 'en'
-                  ? 'Form sections correspond to collaboration plan elements with Diasen.'
-                  : 'Sekcje formularza odpowiadają elementom planu współpracy z Diasen.'}
+                {t.sectionsDescription}
               </p>
             </div>
             <div className="flex items-center gap-3 text-xs text-zinc-300">
@@ -248,7 +244,7 @@ export default function HomePage() {
                   A
                 </div>
               </div>
-              <span>{language === 'en' ? 'You + Diasen / shared vision' : 'Ty + Diasen / wspólna wizja'}</span>
+              <span>{t.sharedVision}</span>
             </div>
           </div>
 
@@ -258,7 +254,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="companyName" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Company / Brand name *' : 'Nazwa firmy / marki *'}
+                    {t.companyName}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -274,7 +270,7 @@ export default function HomePage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="contactPerson" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Contact person *' : 'Osoba kontaktowa *'}
+                    {t.contactPerson}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -292,7 +288,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="contactRole" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Position / Role' : 'Stanowisko'}
+                    {t.contactRole}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -307,7 +303,7 @@ export default function HomePage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="contactEmail" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Email *' : 'E-mail *'}
+                    {t.contactEmail}
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -327,20 +323,20 @@ export default function HomePage() {
             <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 1 — Wybór obszarów współpracy</h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">{t.section1Title}</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    Proszę zaznaczyć obszary współpracy, które są dla Państwa interesujące.
+                    {t.section1Description}
                   </p>
                 </div>
                 <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
-                  Sekcja 1/4
+                  {t.section1Of4}
                 </span>
               </div>
 
               {/* A. Wizualna prezentacja marki */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  {language === 'en' ? 'A. Visual Brand Presentation - Diasen Poland' : 'A. Wizualna prezentacja marki Diasen Polska'}
+                  {t.areaA}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -351,36 +347,18 @@ export default function HomePage() {
                     'prezentacje_produktow_polskie_projekty',
                     'otwarci_wizualna_prezentacja'
                   ].map((area, index) => {
-                    const labels = [
-                      language === 'en'
-                        ? [
-                          'Exclusive marketing materials from realizations (photo / video)',
-                          'Editorial-style project documentation',
-                          'Image campaigns and social media content creation',
-                          'Creating materials for Diasen Poland',
-                          'Product presentations in real Polish projects',
-                          'We are open to cooperation in this area'
-                        ]
-                        : [
-                          'Ekskluzywne materiały marketingowe z realizacji (foto / wideo)',
-                          'Dokumentacja projektów w stylu editorial',
-                          'Kreacja kampanii wizerunkowych i treści do social media',
-                          'Tworzenie materiałów dla Diasen Polska',
-                          'Prezentacje produktów w realnych polskich projektach',
-                          'Jesteśmy otwarci na współpracę w tym obszarze'
-                        ]
-                    ];
+                    const labels = t.areaAOptions;
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -390,7 +368,7 @@ export default function HomePage() {
               {/* B. Ambasadorskie działania kreatywne */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  {language === 'en' ? 'B. Ambassador Creative Activities' : 'B. Ambasadorskie działania kreatywne'}
+                  {t.areaB}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -401,36 +379,18 @@ export default function HomePage() {
                     'kampanie_technologia_projekty',
                     'otwarci_ambasadorskie'
                   ].map((area, index) => {
-                    const labels = [
-                      language === 'en'
-                        ? [
-                          'Diasen Poland Brand Ambassador Role',
-                          'Independent marketing materials creation',
-                          'Collaboration with Diasen Poland marketing department',
-                          'Visual narrative building (brand storytelling)',
-                          'Campaigns linking Diasen technology with projects',
-                          'We are open'
-                        ]
-                        : [
-                          'Rola Ambasadora Marki Diasen Polska',
-                          'Niezależna kreacja materiałów marketingowych',
-                          'Współpraca z działem marketingu Diasen Polska',
-                          'Budowanie narracji wizualnej (brand storytelling)',
-                          'Kampanie łączące technologię Diasen z moimi projektami',
-                          'Jesteśmy otwarci'
-                        ]
-                    ];
+                    const labels = t.areaBOptions;
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -440,7 +400,7 @@ export default function HomePage() {
               {/* C. Murale i realizacje artystyczne */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  {language === 'en' ? 'C. Murals and Artistic Realizations' : 'C. Murale i realizacje artystyczne'}
+                  {t.areaC}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -450,34 +410,18 @@ export default function HomePage() {
                     'ekspozycje_przestrzen_publiczna',
                     'otwarci_murale'
                   ].map((area, index) => {
-                    const labels = [
-                      language === 'en'
-                        ? [
-                          'Exclusive interior murals',
-                          'Exclusive facade murals',
-                          'Murals at expos, fairs and events',
-                          'Unique expositions in public spaces',
-                          'We are open'
-                        ]
-                        : [
-                          'Ekskluzywne murale wewnętrzne',
-                          'Ekskluzywne murale elewacyjne',
-                          'Murale na expo, targach i wydarzeniach',
-                          'Unikalne ekspozycje w przestrzeni publicznej',
-                          'Jesteśmy otwarci'
-                        ]
-                    ];
+                    const labels = t.areaCOptions;
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -487,7 +431,7 @@ export default function HomePage() {
               {/* D. Działania ekspozycyjne, eventowe i edukacyjne */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  {language === 'en' ? 'D. Exhibition, Event and Educational Activities' : 'D. Działania ekspozycyjne, eventowe i edukacyjne'}
+                  {t.areaD}
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -498,36 +442,18 @@ export default function HomePage() {
                     'eventy_tematyczne_tworcy',
                     'otwarci_ekspozycyjne'
                   ].map((area, index) => {
-                    const labels = [
-                      language === 'en'
-                        ? [
-                          'Participation in Polish fairs, expos and showrooms',
-                          'Visual installations for industry events',
-                          'Training for architects, contractors and developers',
-                          'Webinars / lives for recipients in Poland',
-                          'Thematic events with creators participation',
-                          'We are open'
-                        ]
-                        : [
-                          'Udział w polskich targach, expo i showroomach',
-                          'Instalacje wizualne na wydarzenia branżowe',
-                          'Szkolenia dla architektów, wykonawców i deweloperów',
-                          'Webinary / live\'y dla odbiorców w Polsce',
-                          'Eventy tematyczne z udziałem twórców',
-                          'Jesteśmy otwarci'
-                        ]
-                    ];
+                    const labels = t.areaDOptions;
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -537,7 +463,7 @@ export default function HomePage() {
               {/* E. Rozszerzona współpraca biznesowa */}
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
-                  {language === 'en' ? 'E. Extended Business Cooperation' : 'E. Rozszerzona współpraca biznesowa'}
+                  E. Rozszerzona współpraca biznesowa
                 </h3>
                 <div className="space-y-2">
                   {[
@@ -549,35 +475,24 @@ export default function HomePage() {
                     'otwarci_biznesowa'
                   ].map((area, index) => {
                     const labels = [
-                      language === 'en'
-                        ? [
-                          'Cooperation as independent partner',
-                          'Permanent cooperation as creative consultant',
-                          'Quarterly / semi-annual campaigns',
-                          'Diasen product presentations at developers',
-                          'Creative consulting for clients',
-                          'We are open'
-                        ]
-                        : [
-                          'Współpraca jako niezależny partner',
-                          'Stała współpraca jako konsultant kreatywny',
-                          'Kampanie kwartalne / półroczne',
-                          'Prezentacje produktów Diasen u deweloperów',
-                          'Doradztwo kreatywne dla klientów',
-                          'Jesteśmy otwarci'
-                        ]
+                      'Współpraca jako niezależny partner',
+                      'Stała współpraca jako konsultant kreatywny',
+                      'Kampanie kwartalne / półroczne',
+                      'Prezentacje produktów Diasen u deweloperów',
+                      'Doradztwo kreatywne dla klientów',
+                      'Jesteśmy otwarci'
                     ];
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -619,16 +534,16 @@ export default function HomePage() {
                       'Jesteśmy otwarci'
                     ];
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
@@ -662,16 +577,16 @@ export default function HomePage() {
                       'Jesteśmy otwarci'
                     ];
                     return (
-                      <label key={area} className="flex items-start gap-3 text-sm text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-3 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
                         <input
                           type="checkbox"
                           name="areasOfCooperation"
                           value={area}
                           checked={formData.areasOfCooperation.includes(area)}
                           onChange={handleCheckboxChange}
-                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1 flex-shrink-0"
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
                         />
-                        <span className="text-sm leading-relaxed flex-1">{labels[index]}</span>
+                        <span className="text-xs leading-tight">{labels[index]}</span>
                       </label>
                     );
                   })}
