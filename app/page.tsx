@@ -3,64 +3,60 @@
 import { useState } from 'react';
 
 interface FormData {
-  // Section 1: Company Data
+  // Basic company info
   companyName: string;
   contactPerson: string;
   contactRole: string;
   contactEmail: string;
   
-  // Section 2: Modules of collaboration
-  modules: string[];
+  // SEKCJA 1: Obszary współpracy (A-H)
+  areasOfCooperation: string[];
   
-  // Section 3: Goals
-  goals: string[];
-  goalsDetails: string;
+  // SEKCJA 2: Model współpracy i zaangażowania
+  cooperationModel: string[];
+  billingForm: string[];
+  engagementScope: string[];
+  teamIntegrationLevel: string[];
+  additionalPreferences: string[];
   
-  // Section 4: Intensity & Budget
-  intensity: number;
-  budgetMin: string;
-  budgetMax: string;
+  // SEKCJA 3: Scenariusze współpracy (1-8)
+  selectedScenarios: string[];
   
-  // Section 5: Markets
-  markets: string[];
-  marketsDetails: string;
-  
-  // Section 6: Language & Email
+  // Additional options
   languageMode: string;
   sendEmail: boolean;
   emailToSend: string;
+  additionalNotes: string;
 }
 
 export default function HomePage() {
   const [showForm, setShowForm] = useState(false);
   const [language, setLanguage] = useState('en');
   const [formData, setFormData] = useState<FormData>({
-    // Section 1: Company Data
+    // Basic company info
     companyName: '',
     contactPerson: '',
     contactRole: '',
     contactEmail: '',
     
-    // Section 2: Modules
-    modules: [],
+    // SEKCJA 1: Obszary współpracy
+    areasOfCooperation: [],
     
-    // Section 3: Goals
-    goals: [],
-    goalsDetails: '',
+    // SEKCJA 2: Model współpracy i zaangażowania
+    cooperationModel: [],
+    billingForm: [],
+    engagementScope: [],
+    teamIntegrationLevel: [],
+    additionalPreferences: [],
     
-    // Section 4: Intensity & Budget
-    intensity: 50,
-    budgetMin: '',
-    budgetMax: '',
+    // SEKCJA 3: Scenariusze współpracy
+    selectedScenarios: [],
     
-    // Section 5: Markets
-    markets: ['Polska'],
-    marketsDetails: '',
-    
-    // Section 6: Language & Email
+    // Additional options
     languageMode: 'pl',
     sendEmail: false,
-    emailToSend: ''
+    emailToSend: '',
+    additionalNotes: ''
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -191,29 +187,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="px-5 md:px-8 py-6 md:py-8 space-y-8 text-sm md:text-[15px]">
-            {/* SECTION 1 – Company Data */}
-            <section className="space-y-4">
-              <div className="flex items-center justify-between gap-2">
-                <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">
-                    {language === 'en' ? '1. Company Information' : '1. Dane firmy'}
-                  </h2>
-                  <p className="text-xs text-zinc-300 mt-1">
-                    {language === 'en'
-                      ? 'Information that will appear in the collaboration proposal header.'
-                      : 'Informacje, które pojawią się w nagłówku propozycji współpracy.'}
-                  </p>
-                </div>
-                <span className="text-[11px] px-2 py-1 rounded-full bg-black/30 text-zinc-200 border border-white/20">
-                  {language === 'en' ? 'step 1/6' : 'krok 1/6'}
-                </span>
-              </div>
-
+          <form onSubmit={handleSubmit} className="px-5 md:px-8 py-6 md:py-8 space-y-8 text-sm">
+            {/* Basic Company Info */}
+            <section className="space-y-4 pb-6 border-b border-white/10">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="companyName" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Company / Brand name' : 'Nazwa firmy / marki'} *
+                    Nazwa firmy / marki *
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -222,14 +202,14 @@ export default function HomePage() {
                     name="companyName"
                     value={formData.companyName}
                     onChange={handleInputChange}
-                    placeholder={language === 'en' ? 'e.g. Diasen International' : 'np. Diasen Polska'}
+                    placeholder="np. Diasen Polska"
                     required
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label htmlFor="contactPerson" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Contact person (full name)' : 'Osoba kontaktowa (imię i nazwisko)'} *
+                    Osoba kontaktowa *
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -238,7 +218,7 @@ export default function HomePage() {
                     name="contactPerson"
                     value={formData.contactPerson}
                     onChange={handleInputChange}
-                    placeholder={language === 'en' ? 'e.g. John Smith' : 'np. Jan Kowalski'}
+                    placeholder="np. Anna Kowalska"
                     required
                   />
                 </div>
@@ -247,7 +227,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="contactRole" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Role / Position' : 'Rola / stanowisko'}
+                    Stanowisko
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -256,13 +236,13 @@ export default function HomePage() {
                     name="contactRole"
                     value={formData.contactRole}
                     onChange={handleInputChange}
-                    placeholder={language === 'en' ? 'e.g. Marketing Manager' : 'np. Kierownik Marketingu'}
+                    placeholder="np. Kierownik Marketingu"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label htmlFor="contactEmail" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Contact email' : 'E-mail do kontaktu'} *
+                    E-mail *
                   </label>
                   <input
                     className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -271,341 +251,344 @@ export default function HomePage() {
                     name="contactEmail"
                     value={formData.contactEmail}
                     onChange={handleInputChange}
-                    placeholder={language === 'en' ? 'e.g. contact@company.com' : 'np. kontakt@firma.pl'}
+                    placeholder="np. kontakt@diasen.pl"
                     required
                   />
                 </div>
               </div>
             </section>
 
-            {/* SECTION 2 – Modules of Collaboration */}
+            {/* SEKCJA 1 – Obszary współpracy (A-H) */}
             <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">
-                    {language === 'en' ? '2. Collaboration Modules' : '2. Moduły współpracy'}
-                  </h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 1 — Wybór obszarów współpracy</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    {language === 'en'
-                      ? 'Choose which areas of support interest you.'
-                      : 'Wybierz, które obszary wsparcia Cię interesują.'}
+                    Proszę zaznaczyć obszary współpracy, które są dla Państwa interesujące.
                   </p>
                 </div>
-                <span className="text-[11px] px-2 py-1 rounded-full bg-black/30 text-zinc-200 border border-white/20">
-                  {language === 'en' ? 'step 2/6' : 'krok 2/6'}
+                <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
+                  Sekcja 1/4
                 </span>
               </div>
 
-              {/* Strategy & Positioning */}
+              {/* A. Wizualna prezentacja marki */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold text-zinc-200 bg-amber-500/20 px-3 py-1.5 rounded-lg">
-                  {language === 'en' ? '📋 Strategy & Positioning' : '📋 Strategia i pozycjonowanie'}
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  A. Wizualna prezentacja marki Diasen Polska
                 </h3>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {[
-                    { value: 'strategie_marki', labelPL: 'Uporządkowanie strategii marki i komunikacji', labelEN: 'Brand strategy organization' },
-                    { value: 'pozycjonowanie_premium', labelPL: 'Wizerunek premium / pozycjonowanie marki', labelEN: 'Premium image / brand positioning' },
-                    { value: 'wejscie_na_rynki', labelPL: 'Strategia wejścia na nowe rynki', labelEN: 'New market entry strategy' },
-                    { value: 'konsultacje_kreatywne', labelPL: 'Konsultacje kreatywne + kierunek wizualny', labelEN: 'Creative consultations + visual direction' }
-                  ].map((module) => (
-                    <label key={module.value} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2.5 cursor-pointer hover:bg-black/40 transition-colors">
-                      <input
-                        type="checkbox"
-                        name="modules"
-                        value={module.value}
-                        checked={formData.modules.includes(module.value)}
-                        onChange={handleCheckboxChange}
-                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
-                      />
-                      <span className="text-xs leading-tight">{language === 'en' ? module.labelEN : module.labelPL}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Materials & Content */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold text-zinc-200 bg-amber-500/20 px-3 py-1.5 rounded-lg">
-                  {language === 'en' ? '🎨 Materials & Content' : '🎨 Materiały i treści'}
-                </h3>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {[
-                    { value: 'materialy_editorial', labelPL: 'Editorialowe zdjęcia projektów (premium)', labelEN: 'Editorial project photography (premium)' },
-                    { value: 'video_krotkie_formy', labelPL: 'Krótkie formy wideo / reels / social video', labelEN: 'Short video formats / reels / social video' },
-                    { value: 'wizualizacje_3d', labelPL: 'Wizualizacje 3D produktów i aplikacji', labelEN: '3D product and application visualizations' },
-                    { value: 'dokumentacja_realizacji', labelPL: 'Dokumentacja realizacji (foto/video)', labelEN: 'Project documentation (photo/video)' },
-                    { value: 'biblioteka_zdjec', labelPL: 'Biblioteka zdjęć produktów / tekstur', labelEN: 'Product / texture photo library' }
-                  ].map((module) => (
-                    <label key={module.value} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2.5 cursor-pointer hover:bg-black/40 transition-colors">
-                      <input
-                        type="checkbox"
-                        name="modules"
-                        value={module.value}
-                        checked={formData.modules.includes(module.value)}
-                        onChange={handleCheckboxChange}
-                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
-                      />
-                      <span className="text-xs leading-tight">{language === 'en' ? module.labelEN : module.labelPL}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Social Media & Campaigns */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold text-zinc-200 bg-amber-500/20 px-3 py-1.5 rounded-lg">
-                  {language === 'en' ? '📱 Social Media & Campaigns' : '📱 Social media i kampanie'}
-                </h3>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {[
-                    { value: 'kampania_pilotazowa', labelPL: 'Kampania pilotażowa (np. rynek PL)', labelEN: 'Pilot campaign (e.g. PL market)' },
-                    { value: 'content_dla_architektow', labelPL: 'Content i materiały specjalne dla architektów', labelEN: 'Special content for architects' },
-                    { value: 'kampanie_edukacyjne', labelPL: 'Kampanie edukacyjne (mikroklimat, akustyka)', labelEN: 'Educational campaigns (microclimate, acoustics)' },
-                    { value: 'pr_publikacje', labelPL: 'PR i publikacje branżowe', labelEN: 'PR and industry publications' }
-                  ].map((module) => (
-                    <label key={module.value} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2.5 cursor-pointer hover:bg-black/40 transition-colors">
-                      <input
-                        type="checkbox"
-                        name="modules"
-                        value={module.value}
-                        checked={formData.modules.includes(module.value)}
-                        onChange={handleCheckboxChange}
-                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
-                      />
-                      <span className="text-xs leading-tight">{language === 'en' ? module.labelEN : module.labelPL}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* SECTION 3 – Goals */}
-            <section className="space-y-4 border-t border-white/20 pt-6">
-              <div className="flex items-center justify-between gap-2">
-                <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">
-                    {language === 'en' ? '3. Goals / Expected Outcomes' : '3. Cele / oczekiwane rezultaty'}
-                  </h2>
-                  <p className="text-xs text-zinc-300 mt-1">
-                    {language === 'en'
-                      ? 'Choose what you want to achieve.'
-                      : 'Wybierz, co chcesz osiągnąć.'}
-                  </p>
-                </div>
-                <span className="text-[11px] px-2 py-1 rounded-full bg-black/30 text-zinc-200 border border-white/20">
-                  {language === 'en' ? 'step 3/6' : 'krok 3/6'}
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-3">
-                  {[
-                    { value: 'rozpoznawalnosc', labelPL: 'Zwiększenie rozpoznawalności marki', labelEN: 'Increase brand recognition' },
-                    { value: 'dotarcie_architekci', labelPL: 'Dotarcie do biur architektonicznych', labelEN: 'Reach architectural offices' },
-                    { value: 'prestiz_marki', labelPL: 'Podniesienie prestiżu marki', labelEN: 'Increase brand prestige' },
-                    { value: 'wyróżnienie_technologia', labelPL: 'Wyróżnienie się technologią', labelEN: 'Stand out with technology' },
-                    { value: 'wzrost_popytu', labelPL: 'Zwiększenie popytu na produkty', labelEN: 'Increase product demand' },
-                    { value: 'portfolio_realizacji', labelPL: 'Portfolio referencyjnych realizacji', labelEN: 'Portfolio of reference projects' },
-                    { value: 'wejscie_rynek_polska', labelPL: 'Umocnienie pozycji w Polsce', labelEN: 'Strengthen position in Poland' },
-                    { value: 'wejscie_rynek_eu', labelPL: 'Rozwój na rynku europejskim', labelEN: 'European market development' }
-                  ].map((goal) => (
-                    <label key={goal.value} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2.5 cursor-pointer hover:bg-black/40 transition-colors">
-                      <input
-                        type="checkbox"
-                        name="goals"
-                        value={goal.value}
-                        checked={formData.goals.includes(goal.value)}
-                        onChange={handleCheckboxChange}
-                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
-                      />
-                      <span className="text-xs leading-tight">{language === 'en' ? goal.labelEN : goal.labelPL}</span>
-                    </label>
-                  ))}
-                </div>
-
-                <div className="space-y-1.5">
-                  <label htmlFor="goalsDetails" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en'
-                      ? 'What is most important to you now? (max 2-3 priorities)'
-                      : 'Co jest dla Was teraz najważniejsze? (max 2-3 priorytety)'}
-                  </label>
-                  <textarea
-                    id="goalsDetails"
-                    name="goalsDetails"
-                    value={formData.goalsDetails}
-                    onChange={handleInputChange}
-                    className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[80px]"
-                    placeholder={language === 'en'
-                      ? 'e.g. We want to build a stronger image among architects in Poland.'
-                      : 'np. Chcemy zbudować silniejszy wizerunek wśród architektów w Polsce.'}
-                  />
-                </div>
-              </div>
-            </section>
-
-            {/* SECTION 4 – Intensity & Budget */}
-            <section className="space-y-4 border-t border-white/20 pt-6">
-              <div className="flex items-center justify-between gap-2">
-                <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">
-                    {language === 'en' ? '4. Intensity & Budget' : '4. Intensywność i budżet'}
-                  </h2>
-                  <p className="text-xs text-zinc-300 mt-1">
-                    {language === 'en'
-                      ? 'How intensive collaboration are you looking for?'
-                      : 'Jak intensywnej współpracy szukacie?'}
-                  </p>
-                </div>
-                <span className="text-[11px] px-2 py-1 rounded-full bg-black/30 text-zinc-200 border border-white/20">
-                  {language === 'en' ? 'step 4/6' : 'krok 4/6'}
-                </span>
-              </div>
-
-              <div className="space-y-4">
                 <div className="space-y-2">
-                  <label htmlFor="intensity" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Collaboration intensity' : 'Intensywność współpracy'}
-                  </label>
-                  <div className="flex items-center gap-3">
-                    <input
-                      className="w-full accent-amber-400"
-                      type="range"
-                      id="intensity"
-                      name="intensity"
-                      min="0"
-                      max="100"
-                      step="10"
-                      value={formData.intensity}
-                      onChange={handleInputChange}
-                    />
-                    <span className="text-xs font-semibold text-amber-300 w-16 text-right">
-                      {formData.intensity}%
-                    </span>
-                  </div>
-                  <p className="text-xs text-zinc-400 mt-1">
-                    {formData.intensity <= 30
-                      ? (language === 'en' ? 'single project / pilot' : 'pojedynczy projekt / pilotaż')
-                      : formData.intensity <= 70
-                      ? (language === 'en' ? 'regular collaboration (several modules)' : 'regularna współpraca (kilka modułów)')
-                      : (language === 'en' ? 'full partnership program' : 'pełny program partnerski')
-                    }
-                  </p>
+                  {[
+                    'materialy_marketingowe_ekskluzywne',
+                    'dokumentacja_projektow_editorial',
+                    'kampanie_wizerunkowe_social_media',
+                    'materialy_dla_diasen',
+                    'prezentacje_produktow_polskie_projekty',
+                    'otwarci_wizualna_prezentacja'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Ekskluzywne materiały marketingowe z realizacji (foto / wideo)',
+                      'Dokumentacja projektów w stylu editorial',
+                      'Kreacja kampanii wizerunkowych i treści do social media',
+                      'Tworzenie materiałów dla Diasen Polska',
+                      'Prezentacje produktów w realnych polskich projektach',
+                      'Jesteśmy otwarci na współpracę w tym obszarze'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
                 </div>
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label htmlFor="budgetMin" className="block text-xs font-semibold text-zinc-200">
-                      {language === 'en' ? 'Minimum monthly budget (€)' : 'Minimalny budżet miesięczny (€)'}
-                    </label>
-                    <input
-                      className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
-                      type="number"
-                      id="budgetMin"
-                      name="budgetMin"
-                      value={formData.budgetMin}
-                      onChange={handleInputChange}
-                      placeholder={language === 'en' ? 'e.g. 5000' : 'np. 5000'}
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label htmlFor="budgetMax" className="block text-xs font-semibold text-zinc-200">
-                      {language === 'en' ? 'Maximum monthly budget (€)' : 'Maksymalny budżet miesięczny (€)'}
-                    </label>
-                    <input
-                      className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
-                      type="number"
-                      id="budgetMax"
-                      name="budgetMax"
-                      value={formData.budgetMax}
-                      onChange={handleInputChange}
-                      placeholder={language === 'en' ? 'e.g. 8000' : 'np. 8000'}
-                    />
-                  </div>
+              {/* B. Ambasadorskie działania kreatywne */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  B. Ambasadorskie działania kreatywne
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'rola_ambasadora_marki',
+                    'niezalezna_kreacja_materialow',
+                    'wspolpraca_dzial_marketing',
+                    'budowanie_narracji_wizualnej',
+                    'kampanie_technologia_projekty',
+                    'otwarci_ambasadorskie'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Rola Ambasadora Marki Diasen Polska',
+                      'Niezależna kreacja materiałów marketingowych',
+                      'Współpraca z działem marketingu Diasen Polska',
+                      'Budowanie narracji wizualnej (brand storytelling)',
+                      'Kampanie łączące technologię Diasen z moimi projektami',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* C. Murale i realizacje artystyczne */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-100 bg-zinc-800/30 px-3 py-2 rounded-lg">
+                  C. Murale i realizacje artystyczne
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    'murale_wewnetrzne_ekskluzywne',
+                    'murale_elewacyjne_ekskluzywne',
+                    'murale_expo_targi_wydarzenia',
+                    'ekspozycje_przestrzen_publiczna',
+                    'otwarci_murale'
+                  ].map((area, index) => {
+                    const labels = [
+                      'Ekskluzywne murale wewnętrzne',
+                      'Ekskluzywne murale elewacyjne',
+                      'Murale na expo, targach i wydarzeniach',
+                      'Unikalne ekspozycje w przestrzeni publicznej',
+                      'Jesteśmy otwarci'
+                    ];
+                    return (
+                      <label key={area} className="inline-flex items-start gap-2 text-xs text-zinc-200 bg-black/20 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/30 transition-colors w-full">
+                        <input
+                          type="checkbox"
+                          name="areasOfCooperation"
+                          value={area}
+                          checked={formData.areasOfCooperation.includes(area)}
+                          onChange={handleCheckboxChange}
+                          className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-0.5"
+                        />
+                        <span className="text-xs leading-tight">{labels[index]}</span>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
             </section>
 
-            {/* SECTION 5 – Markets */}
-            <section className="space-y-4 border-t border-white/20 pt-6">
+            {/* SEKCJA 2 – Model współpracy i zaangażowania */}
+            <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">
-                    {language === 'en' ? '5. Markets / Regions' : '5. Rynki / regiony'}
-                  </h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 2 — Model współpracy i zaangażowania</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    {language === 'en'
-                      ? 'Which markets are you targeting?'
-                      : 'Które rynki są dla Was docelowe?'}
+                    Proszę wybrać preferowany sposób współpracy i formę rozliczeń.
                   </p>
                 </div>
-                <span className="text-[11px] px-2 py-1 rounded-full bg-black/30 text-zinc-200 border border-white/20">
-                  {language === 'en' ? 'step 5/6' : 'krok 5/6'}
+                <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
+                  Sekcja 2/4
                 </span>
               </div>
 
-              <div className="space-y-4">
+              {/* 1. Preferowany model współpracy */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-200">1. Preferowany model współpracy</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { value: 'Polska', labelEN: 'Poland' },
-                    { value: 'Europa', labelEN: 'Europe' },
-                    { value: 'Bliski Wschód', labelEN: 'Middle East' },
-                    { value: 'Inne', labelEN: 'Other (to be specified)' }
-                  ].map((market) => (
-                    <label key={market.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2 cursor-pointer hover:bg-black/40 transition-colors">
+                    { value: 'projektowy', label: 'Projektowy (per projekt)' },
+                    { value: 'staly', label: 'Stały (miesięczny / retainer)' },
+                    { value: 'okresowy', label: 'Okresowy (kwartał / pół roku)' },
+                    { value: 'mieszany', label: 'Mieszany (stała część + projekty)' },
+                    { value: 'otwarci_model', label: 'Jesteśmy otwarci' }
+                  ].map((option) => (
+                    <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
                       <input
                         type="checkbox"
-                        name="markets"
-                        value={market.value}
-                        checked={formData.markets.includes(market.value)}
+                        name="cooperationModel"
+                        value={option.value}
+                        checked={formData.cooperationModel.includes(option.value)}
                         onChange={handleCheckboxChange}
                         className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
-                      <span>{language === 'en' ? market.labelEN : market.value}</span>
+                      <span>{option.label}</span>
                     </label>
                   ))}
                 </div>
+              </div>
 
-                <div className="space-y-1.5">
-                  <label htmlFor="marketsDetails" className="block text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Additional comments about markets' : 'Dodatkowe uwagi o rynkach'}
-                  </label>
-                  <textarea
-                    id="marketsDetails"
-                    name="marketsDetails"
-                    value={formData.marketsDetails}
-                    onChange={handleInputChange}
-                    className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[60px]"
-                    placeholder={language === 'en'
-                      ? 'e.g. Focus on premium segment, luxury residential projects'
-                      : 'np. Skupienie na segmencie premium, luksusowe projekty mieszkaniowe'}
-                  />
+              {/* 2. Forma rozliczeń */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-200">2. Forma rozliczeń</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { value: 'miesieczna', label: 'Miesięczna' },
+                    { value: 'kwartalna', label: 'Kwartalna' },
+                    { value: 'polroczna', label: 'Półroczna' },
+                    { value: 'jednorazowa', label: 'Jednorazowa (per kampania)' },
+                    { value: 'otwarci_rozliczenia', label: 'Jesteśmy otwarci' }
+                  ].map((option) => (
+                    <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
+                      <input
+                        type="checkbox"
+                        name="billingForm"
+                        value={option.value}
+                        checked={formData.billingForm.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3. Zakres zaangażowania */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-zinc-200">3. Zakres zaangażowania</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { value: 'dostepnosc_projektowa', label: 'Dostępność projektowa (ad-hoc)' },
+                    { value: 'stala_dostepnosc', label: 'Stała dostępność (określony wymiar godzin)' },
+                    { value: 'intensywna_kampania', label: 'Intensywna praca w czasie kampanii' },
+                    { value: 'doradztwo_kreatywne', label: 'Doradztwo kreatywne' },
+                    { value: 'otwarci_zaangażowanie', label: 'Jesteśmy otwarci' }
+                  ].map((option) => (
+                    <label key={option.value} className="inline-flex items-center gap-2 text-xs text-zinc-200 bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-black/40">
+                      <input
+                        type="checkbox"
+                        name="engagementScope"
+                        value={option.value}
+                        checked={formData.engagementScope.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
             </section>
 
-            {/* SECTION 6 – Language & Email Options */}
-            <section className="space-y-4 border-t border-white/20 pt-6">
+            {/* SEKCJA 3 – Scenariusze współpracy */}
+            <section className="space-y-6 border-t border-white/20 pt-6">
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">
-                    {language === 'en' ? '6. Language & Email Options' : '6. Język i opcje email'}
-                  </h2>
+                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 3 — Proponowane scenariusze współpracy</h2>
                   <p className="text-xs text-zinc-300 mt-1">
-                    {language === 'en'
-                      ? 'Choose proposal language and email delivery options.'
-                      : 'Wybierz język propozycji i opcje dostarczenia email.'}
+                    Można wybrać jedną lub kilka opcji. Finalna oferta będzie hybrydą wybranych elementów.
                   </p>
                 </div>
-                <span className="text-[11px] px-2 py-1 rounded-full bg-black/30 text-zinc-200 border border-white/20">
-                  {language === 'en' ? 'step 6/6' : 'krok 6/6'}
+                <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
+                  Sekcja 3/4
+                </span>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {
+                    value: 'scenariusz_1',
+                    title: 'SCENARIUSZ 1 — Marketingowo-Ambasadorski',
+                    description: 'Stała produkcja treści foto/wideo • Kampanie wizerunkowe • Rola ambasadora • Dokumentacja projektów • Storytelling marki'
+                  },
+                  {
+                    value: 'scenariusz_2',
+                    title: 'SCENARIUSZ 2 — Artystyczno-Eventowy',
+                    description: 'Murale wewnętrzne i fasadowe • Murale na wydarzeniach • Instalacje • Rozliczenia projektowe'
+                  },
+                  {
+                    value: 'scenariusz_3',
+                    title: 'SCENARIUSZ 3 — Hybryda Kreatywno-Marketingowa',
+                    description: 'Art + marketing • Prowadzenie social media • Treści premium • Storytelling • Elastyczne rozliczenia'
+                  },
+                  {
+                    value: 'scenariusz_4',
+                    title: 'SCENARIUSZ 4 — Rozwój Regionalny i Edukacja',
+                    description: 'Szkolenia dla architektów • Budowanie społeczności • Prezentacje dla deweloperów'
+                  },
+                  {
+                    value: 'scenariusz_5',
+                    title: 'SCENARIUSZ 5 — Minimalny Start (Light)',
+                    description: 'Pojedyncze projekty/kampanie • Możliwość rozszerzenia współpracy'
+                  },
+                  {
+                    value: 'scenariusz_6',
+                    title: 'SCENARIUSZ 6 — Ogólnokrajowa Kampania Edukacyjna',
+                    description: 'Akcja ulotkowa z próbkami farb • Edukacja o akustyce • Dystrybucja • Materiały edukacyjne'
+                  },
+                  {
+                    value: 'scenariusz_7',
+                    title: 'SCENARIUSZ 7 — Kampanie Świadomościowe',
+                    description: 'Serie edukacyjne • Analiza problemów mieszkań • Edukacja dla odbiorców'
+                  },
+                  {
+                    value: 'scenariusz_8',
+                    title: 'SCENARIUSZ 8 — Utworzenie Działu Marketingu',
+                    description: 'Stworzenie działu od zera • Kierunek kreatywny • Brand book PL • Rekrutacja'
+                  }
+                ].map((scenario) => (
+                  <div key={scenario.value} className="bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-black/40 transition-colors">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="selectedScenarios"
+                        value={scenario.value}
+                        checked={formData.selectedScenarios.includes(scenario.value)}
+                        onChange={handleCheckboxChange}
+                        className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400 mt-1"
+                      />
+                      <div>
+                        <h4 className="text-sm font-semibold text-zinc-100 mb-1">{scenario.title}</h4>
+                        <p className="text-xs text-zinc-300 leading-relaxed">{scenario.description}</p>
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* SEKCJA 4 – Options and submission */}
+            <section className="space-y-6 border-t border-white/20 pt-6">
+              <div className="flex items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-lg font-semibold text-zinc-100">SEKCJA 4 — Finalna hybryda</h2>
+                  <p className="text-xs text-zinc-300 mt-1">
+                    Opcje dodatkowe i generowanie finalnej propozycji współpracy.
+                  </p>
+                </div>
+                <span className="text-[11px] px-2 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
+                  Sekcja 4/4
                 </span>
               </div>
 
               <div className="space-y-4">
+                <div className="space-y-1.5">
+                  <label htmlFor="additionalNotes" className="block text-xs font-semibold text-zinc-200">
+                    Dodatkowe uwagi lub komentarze
+                  </label>
+                  <textarea
+                    id="additionalNotes"
+                    name="additionalNotes"
+                    value={formData.additionalNotes}
+                    onChange={handleInputChange}
+                    className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80 min-h-[70px]"
+                    placeholder="np. preferencje dotyczące terminów, specjalne wymagania, dodatkowy kontekst"
+                  />
+                </div>
+
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-zinc-200">
-                    {language === 'en' ? 'Proposal language' : 'Język propozycji'}
-                  </p>
+                  <p className="text-xs font-semibold text-zinc-200">Język finalne propozycji</p>
                   <div className="flex flex-wrap gap-3">
                     <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
                       <input
@@ -616,18 +599,7 @@ export default function HomePage() {
                         onChange={handleRadioChange}
                         className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
-                      <span>{language === 'en' ? 'Polish only' : 'Tylko polski'}</span>
-                    </label>
-                    <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
-                      <input
-                        type="radio"
-                        name="languageMode"
-                        value="en"
-                        checked={formData.languageMode === 'en'}
-                        onChange={handleRadioChange}
-                        className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
-                      />
-                      <span>{language === 'en' ? 'English only' : 'Tylko angielski'}</span>
+                      <span>Polski</span>
                     </label>
                     <label className="inline-flex items-center gap-2 text-xs text-zinc-200">
                       <input
@@ -638,7 +610,7 @@ export default function HomePage() {
                         onChange={handleRadioChange}
                         className="border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                       />
-                      <span>{language === 'en' ? 'Both (PL + EN)' : 'Oba języki (PL + EN)'}</span>
+                      <span>Polski + angielski</span>
                     </label>
                   </div>
                 </div>
@@ -652,16 +624,14 @@ export default function HomePage() {
                       onChange={handleInputChange}
                       className="rounded border-white/20 bg-black/30 text-amber-400 focus:ring-amber-400"
                     />
-                    <span>{language === 'en' ? 'Send proposal by email' : 'Wyślij propozycję emailem'}</span>
+                    <span>Wyślij propozycję emailem</span>
                   </label>
                 </div>
 
                 {formData.sendEmail && (
                   <div className="space-y-1.5">
                     <label htmlFor="emailToSend" className="block text-xs font-semibold text-zinc-200">
-                      {language === 'en'
-                        ? 'Email address (leave empty to use contact email)'
-                        : 'Adres email (zostaw puste, aby użyć email kontaktowy)'}
+                      Dodatkowy adres email (opcjonalnie)
                     </label>
                     <input
                       className="w-full rounded-xl border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70 focus:border-amber-300/80"
@@ -670,7 +640,7 @@ export default function HomePage() {
                       name="emailToSend"
                       value={formData.emailToSend}
                       onChange={handleInputChange}
-                      placeholder={language === 'en' ? 'e.g. ceo@company.com' : 'np. prezes@firma.pl'}
+                      placeholder="np. dyrektor@diasen.pl"
                     />
                   </div>
                 )}
