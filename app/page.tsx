@@ -203,7 +203,9 @@ export default function HomePage() {
             <div className="border-b border-white/20 px-6 py-4 flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-zinc-100">{t.modalTitle}</h3>
-                <p className="text-xs text-zinc-300 mt-1">{t.modalSubtitle}</p>
+                <p className="text-xs text-zinc-300 mt-1">
+                  {t.modalSubtitle} {language === 'pl' ? 'jako plik' : 'as a'} {downloadFormat.toUpperCase()} {language === 'pl' ? 'file' : ''}.
+                </p>
               </div>
               <button
                 onClick={() => setShowModal(false)}
@@ -216,8 +218,26 @@ export default function HomePage() {
             {/* Modal Content */}
             <div className="p-6 overflow-auto max-h-[calc(90vh-140px)]">
               <div className="bg-emerald-50/95 backdrop-blur-sm border border-emerald-200/40 rounded-2xl px-6 py-4">
-                <div className="text-sm md:text-base leading-relaxed text-emerald-900 whitespace-pre-wrap font-['Inter'] tracking-wide">
-                  {response}
+                <div className="text-sm md:text-base leading-relaxed text-emerald-900 whitespace-pre-wrap font-sans tracking-wide">
+                  {response.split('\n').map((line, index) => {
+                    // Format bold headers
+                    if (line.startsWith('**') && line.endsWith('**')) {
+                      const boldText = line.slice(2, -2);
+                      return (
+                        <div key={index} className="font-bold text-emerald-800 mb-2 mt-4">
+                          {boldText}
+                        </div>
+                      );
+                    }
+                    // Regular text
+                    return line ? (
+                      <div key={index} className="mb-1">
+                        {line}
+                      </div>
+                    ) : (
+                      <div key={index} className="mb-2"></div>
+                    );
+                  })}
                 </div>
               </div>
               
@@ -1023,8 +1043,26 @@ export default function HomePage() {
               <p className="text-xs uppercase tracking-[0.18em] text-zinc-300 mb-2">
                 {language === 'pl' ? 'Podgląd wygenerowanego tekstu' : 'Generated text preview'}
               </p>
-              <div className="rounded-2xl bg-emerald-50/95 backdrop-blur-sm border border-emerald-200/40 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-emerald-900 whitespace-pre-wrap font-['Inter']">
-                {response}
+              <div className="rounded-2xl bg-emerald-50/95 backdrop-blur-sm border border-emerald-200/40 px-4 py-3 max-h-[320px] overflow-auto text-xs md:text-[13px] leading-relaxed text-emerald-900 font-sans">
+                {response.split('\n').map((line, index) => {
+                  // Format bold headers
+                  if (line.startsWith('**') && line.endsWith('**')) {
+                    const boldText = line.slice(2, -2);
+                    return (
+                      <div key={index} className="font-bold text-emerald-800 mb-1 mt-2">
+                        {boldText}
+                      </div>
+                    );
+                  }
+                  // Regular text
+                  return line ? (
+                    <div key={index} className="mb-1">
+                      {line}
+                    </div>
+                  ) : (
+                    <div key={index} className="mb-1"></div>
+                  );
+                })}
               </div>
             </div>
           )}

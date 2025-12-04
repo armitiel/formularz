@@ -131,7 +131,7 @@ export const translations: Record<'pl' | 'en', Translation> = {
     section2Description: "Proszę wybrać preferowany sposób współpracy i formę rozliczeń.",
     section3Title: "SEKCJA 3 — Proponowane scenariusze współpracy",
     section3Description: "Można wybrać jedną lub kilka opcji. Finalna oferta będzie hybrydą wybranych elementów.",
-    section4Title: "SEKCJA 4 — Finalna hybryda",
+    section4Title: "SEKCJA 4 — Podsumowanie",
     section4Description: "Opcje dodatkowe i generowanie finalnej propozycji współpracy.",
     
     // Step indicators
@@ -336,8 +336,8 @@ export const translations: Record<'pl' | 'en', Translation> = {
     close: "Zamknij",
     
     // Modal
-    modalTitle: "Finalna Hybryda - Propozycja Współpracy",
-    modalSubtitle: "Wygenerowana propozycja została automatycznie pobrana jako plik .txt",
+    modalTitle: "Propozycja Współpracy",
+    modalSubtitle: "Wygenerowana propozycja została automatycznie pobrana jako plik PDF",
     downloadConfirmation: "Propozycja została automatycznie pobrana jako plik tekstowy",
     
     // Common
@@ -365,7 +365,7 @@ export const translations: Record<'pl' | 'en', Translation> = {
     section2Description: "Please select your preferred cooperation method and billing form.",
     section3Title: "SECTION 3 — Proposed Cooperation Scenarios",
     section3Description: "You can select one or several options. The final offer will be a hybrid of selected elements.",
-    section4Title: "SECTION 4 — Final Hybrid",
+    section4Title: "SECTION 4 — Summary of the offer",
     section4Description: "Additional options and generation of final cooperation proposal.",
     
     // Step indicators
@@ -570,8 +570,8 @@ export const translations: Record<'pl' | 'en', Translation> = {
     close: "Close",
     
     // Modal
-    modalTitle: "Final Hybrid - Cooperation Proposal",
-    modalSubtitle: "Generated proposal has been automatically downloaded as a .txt file",
+    modalTitle: "Cooperation Proposal",
+    modalSubtitle: "Generated proposal has been automatically downloaded as a PDF file",
     downloadConfirmation: "Proposal has been automatically downloaded as a text file",
     
     // Common

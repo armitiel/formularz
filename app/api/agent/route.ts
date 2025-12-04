@@ -169,23 +169,20 @@ function generateFallbackProposal(data: FormData): string {
   const isBoth = data.languageMode === 'both';
 
   const generateProposalContent = (lang: 'en' | 'pl') => {
-    return `
-═══════════════════════════════════════════════════════════════════════════════
-${lang === 'en' ? 'STRATEGIC-CREATIVE COLLABORATION PROPOSAL' : 'PROPOZYCJA WSPÓŁPRACY STRATEGICZNO-KREATYWNEJ'}
-${data.companyName} ${lang === 'en' ? 'Partnership Program' : 'Program Partnerski'}
-═══════════════════════════════════════════════════════════════════════════════
-
-${lang === 'en' ? 'Prepared for' : 'Przygotowano dla'}: ${data.companyName}
-${lang === 'en' ? 'Contact' : 'Kontakt'}: ${data.contactPerson}${data.contactRole ? ` (${data.contactRole})` : ''}
-Email: ${data.contactEmail}
-${lang === 'en' ? 'Date' : 'Data'}: ${new Date().toLocaleDateString(lang === 'en' ? 'en-US' : 'pl-PL')}
-
-🎯 ${lang === 'en' ? 'EXECUTIVE SUMMARY' : 'STRESZCZENIE WYKONAWCZE'}
-───────────────────────────────────────────────────────────────────────────────
+    return `${lang === 'en' ? 'Dear DIASEN Team,' : 'Szanowni Państwo z DIASEN,'}
 
 ${lang === 'en'
-  ? `We propose establishing a strategic creative partnership with ${data.companyName}, focused on brand elevation and market presence enhancement.`
-  : `Proponuję nawiązanie strategicznego partnerstwa kreatywnego z ${data.companyName}, skupionego na wzmocnieniu marki i obecności rynkowej.`}
+  ? `I am pleased to present a comprehensive collaboration proposal tailored to your needs, focused on brand elevation and market presence enhancement for Diasen in Poland.`
+  : `Mam przyjemność przedstawić kompleksową propozycję współpracy dostosowaną do Państwa potrzeb, skupioną na wzmocnieniu marki i obecności rynkowej Diasen w Polsce.`}
+
+**${lang === 'en' ? 'COLLABORATION PROPOSAL' : 'PROPOZYCJA WSPÓŁPRACY'}**
+
+${lang === 'en' ? 'Contact Information' : 'Informacje kontaktowe'}:
+${lang === 'en' ? 'Company' : 'Firma'}: ${data.companyName}
+${lang === 'en' ? 'Contact' : 'Kontakt'}: ${data.contactPerson}${data.contactRole ? ` (${data.contactRole})` : ''}
+Email: ${data.contactEmail}
+
+**${lang === 'en' ? 'SELECTED AREAS OF COOPERATION' : 'WYBRANE OBSZARY WSPÓŁPRACY'}**
 
 ${lang === 'en' ? 'RECOMMENDED VARIANT' : 'REKOMENDOWANY WARIANT'}: ${variant}
 
@@ -220,36 +217,34 @@ ${data.additionalNotes ? `
 ${data.additionalNotes}
 ` : ''}
 
-🔄 ${lang === 'en' ? 'FINAL HYBRID PROPOSAL' : 'FINALNA HYBRYDA'}
-───────────────────────────────────────────────────────────────────────────────
+**${lang === 'en' ? 'PROPOSED COLLABORATION PROGRAM' : 'PROPONOWANY PROGRAM WSPÓŁPRACY'}**
 
 ${lang === 'en'
-  ? `Based on your selected areas of cooperation and scenarios, we propose a ${variant} collaboration program that combines:`
-  : `Na podstawie wybranych obszarów współpracy i scenariuszy proponujemy program współpracy ${variant}, który łączy:`
+  ? `Based on your selected areas of cooperation and scenarios, I propose a ${variant} collaboration program that combines:`
+  : `Na podstawie wybranych obszarów współpracy i scenariuszy proponuję program współpracy ${variant}, który łączy:`
 }
 
-${lang === 'en' ? 'SCOPE OF ACTIVITIES' : 'ZAKRES DZIAŁAŃ'}:
+**${lang === 'en' ? 'SCOPE OF ACTIVITIES' : 'ZAKRES DZIAŁAŃ'}**:
 ${data.areasOfCooperation.length > 0
   ? data.areasOfCooperation.slice(0, 5).map(area => `• ${area.replace(/_/g, ' ')}`).join('\n')
   : (lang === 'en' ? '• To be defined based on discussion' : '• Do ustalenia na podstawie rozmowy')
 }
 
-${lang === 'en' ? 'BILLING MODEL' : 'MODEL ROZLICZEŃ'}:
+**${lang === 'en' ? 'BILLING MODEL' : 'MODEL ROZLICZEŃ'}**:
 ${data.billingForm.length > 0
   ? data.billingForm.map(billing => `• ${billing.replace(/_/g, ' ')}`).join('\n')
   : (lang === 'en' ? '• Flexible billing model based on preferences' : '• Elastyczny model rozliczeń według preferencji')
 }
 
-${lang === 'en' ? 'ENGAGEMENT LEVEL' : 'POZIOM ZAANGAŻOWANIA'}:
+**${lang === 'en' ? 'ENGAGEMENT LEVEL' : 'POZIOM ZAANGAŻOWANIA'}**:
 ${data.engagementScope.length > 0
   ? data.engagementScope.map(scope => `• ${scope.replace(/_/g, ' ')}`).join('\n')
   : (lang === 'en' ? '• To be agreed during consultation' : '• Do uzgodnienia podczas konsultacji')
 }
 
-🚀 ${lang === 'en' ? 'NEXT STEPS' : 'NASTĘPNE KROKI'}
-───────────────────────────────────────────────────────────────────────────────
+**${lang === 'en' ? 'NEXT STEPS' : 'NASTĘPNE KROKI'}**
 
-${lang === 'en' ? 'PROPOSED IMPLEMENTATION PROCESS' : 'PROPONOWANY PROCES WDROŻENIA'}:
+**${lang === 'en' ? 'PROPOSED IMPLEMENTATION PROCESS' : 'PROPONOWANY PROCES WDROŻENIA'}**:
 
 1. ${lang === 'en' ? 'STRATEGIC WORKSHOP (1-2h)' : 'WARSZTAT STRATEGICZNY (1-2h)'}
    • ${lang === 'en' ? 'Define business objectives' : 'Doprecyzowanie celów biznesowych'}
@@ -266,12 +261,10 @@ ${lang === 'en' ? 'PROPOSED IMPLEMENTATION PROCESS' : 'PROPONOWANY PROCES WDROŻ
    • ${lang === 'en' ? 'Regular strategic sessions' : 'Regularne sesje strategiczne'}
    • ${lang === 'en' ? 'Scale activities based on results' : 'Skalowanie działań na podstawie wyników'}
 
-═══════════════════════════════════════════════════════════════════════════════
 ${lang === 'en'
-  ? `This document serves as a discussion basis. All parameters can be adjusted to meet ${data.companyName}'s specific needs and expectations.\n\nI am open to discussion of details and modifications to this proposal.\n\n— Amitiel Angelisme`
-  : `Ten dokument stanowi bazę do dyskusji. Wszystkie parametry można dostosować do specyficznych potrzeb i oczekiwań ${data.companyName}.\n\nJestem otwarty na rozmowę o szczegółach i modyfikacjach tej propozycji.\n\n— Amitiel Angelisme`
+  ? `This document serves as a discussion basis. All parameters can be adjusted to meet ${data.companyName}'s specific needs and expectations.\n\nI am open to discussion of details and modifications to this proposal.\n\n**Best regards,**\n**Amitiel Angelisme**`
+  : `Ten dokument stanowi bazę do dyskusji. Wszystkie parametry można dostosować do specyficznych potrzeb i oczekiwań ${data.companyName}.\n\nJestem otwarty na rozmowę o szczegółach i modyfikacjach tej propozycji.\n\n**Z poważaniem,**\n**Amitiel Angelisme**`
 }
-═══════════════════════════════════════════════════════════════════════════════
 `;
   };
 
