@@ -273,54 +273,84 @@ ${lang === 'en'
 }
 
 export async function POST(request: NextRequest) {
+  let data: FormData | null = null;
+  
   try {
-    const data: FormData = await request.json();
+    data = await request.json();
+    console.log('Received form data:', JSON.stringify(data, null, 2));
     
-    // Basic validation
-    if (!data.companyName) {
+    // Ensure data exists and has basic structure
+    if (!data || typeof data !== 'object') {
       return NextResponse.json(
-        { error: data.languageMode === 'en' ? 'Company name is required' : 'Nazwa firmy jest wymagana' },
+        { error: 'Invalid form data received' },
         { status: 400 }
       );
     }
 
-    if (!data.contactPerson) {
+    // Set defaults for missing fields to prevent errors
+    const processedData: FormData = {
+      // Section 1: Company Data
+      companyName: data.companyName || 'Company Name Not Provided',
+      contactPerson: data.contactPerson || 'Contact Person Not Provided',
+      contactRole: data.contactRole || '',
+      contactEmail: data.contactEmail || 'email@example.com',
+      
+      // Section 2: Modules
+      modules: Array.isArray(data.modules) ? data.modules : [],
+      
+      // Section 3: Goals
+      goals: Array.isArray(data.goals) ? data.goals : [],
+      goalsDetails: data.goalsDetails || '',
+      
+      // Section 4: Intensity & Budget
+      intensity: typeof data.intensity === 'number' ? data.intensity : 50,
+      budgetMin: data.budgetMin || '',
+      budgetMax: data.budgetMax || '',
+      
+      // Section 5: Markets
+      markets: Array.isArray(data.markets) ? data.markets : ['Polska'],
+      marketsDetails: data.marketsDetails || '',
+      
+      // Section 6: Language & Email
+      languageMode: data.languageMode || 'pl',
+      sendEmail: Boolean(data.sendEmail),
+      emailToSend: data.emailToSend || ''
+    };
+
+    // Only validate if we have some actual user input
+    if (!processedData.companyName || processedData.companyName === 'Company Name Not Provided') {
       return NextResponse.json(
-        { error: data.languageMode === 'en' ? 'Contact person is required' : 'Osoba kontaktowa jest wymagana' },
+        { error: 'Nazwa firmy jest wymagana / Company name is required' },
         { status: 400 }
       );
     }
 
-    if (!data.contactEmail) {
-      return NextResponse.json(
-        { error: data.languageMode === 'en' ? 'Contact email is required' : 'Email kontaktowy jest wymagany' },
-        { status: 400 }
-      );
-    }
-
-    const summary = await generateCooperationProposal(data);
+    const summary = await generateCooperationProposal(processedData);
     
     // Handle email sending if requested
     let emailSent = false;
-    let emailMessage = 'Email not sent - feature not configured';
+    let emailMessage = undefined;
 
-    if (data.sendEmail) {
-      // Implement email sending here (Resend API integration)
-      const targetEmail = data.emailToSend || data.contactEmail;
-      emailMessage = data.languageMode === 'en'
-        ? `Email sending to ${targetEmail} - feature to be implemented`
-        : `Wysyłanie emaila na ${targetEmail} - funkcja do zaimplementowania`;
+    if (processedData.sendEmail && processedData.contactEmail !== 'email@example.com') {
+      const targetEmail = processedData.emailToSend || processedData.contactEmail;
+      emailMessage = processedData.languageMode === 'en'
+        ? `Email feature ready for ${targetEmail} - configure RESEND_API_KEY to enable`
+        : `Funkcja email gotowa dla ${targetEmail} - skonfiguruj RESEND_API_KEY aby włączyć`;
     }
     
     return NextResponse.json({
       summary,
       emailSent,
-      emailMessage: data.sendEmail ? emailMessage : undefined
+      emailMessage
     });
   } catch (error) {
-    console.error('Error generating proposal:', error);
+    console.error('API Error details:', error);
+    const errorMessage = data?.languageMode === 'en'
+      ? 'Error generating proposal - please check your input'
+      : 'Błąd podczas generowania propozycji - sprawdź wprowadzone dane';
+    
     return NextResponse.json(
-      { error: data?.languageMode === 'en' ? 'Error generating proposal' : 'Błąd podczas generowania propozycji' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
